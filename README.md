@@ -7,8 +7,9 @@ EzDrama format is a Markdown-like (or YAML-like) markup language that serves as 
 
 ## Motivation and Aim:
 
-Plain text plays are usually not uniform enough to be converted to TEI fully automatically. With EzDrama you can manually (or semi-automatically, with simple replaces and regex) add some uniformity without bothering with heavy-weight XML markup. 
-If your text editor of choice is Notepad++, this [user defined language syntax](https://github.com/dracor-org/ezdrama/blob/main/Npp_ezdrama-UDL.xml) will help you with the markup process. To install it: language > user defined language > define your language > import, and then restart the program and select it from the Language menu.
+Plain text plays are usually not uniform enough to be converted to TEI fully automatically. With EzDrama you can manually (or semi-automatically, with simple replaces and regex) add some uniformity without bothering with heavy-weight XML markup. To find out how to do it and how it works check **Syntax** and **Example** below. 
+
+If your text editor of choice is Notepad++, this [user defined language syntax](https://github.com/dracor-org/ezdrama/blob/main/Npp_ezdrama-UDL.xml) will help you with the markup process. To enable EzDrama syntax highlight in your Notepad++ go to `language > user defined language > define your language > import`, import the [file](https://github.com/dracor-org/ezdrama/blob/main/Npp_ezdrama-UDL.xml), and then restart the program and select it from the Language menu.
 
 ## Syntax:
 
