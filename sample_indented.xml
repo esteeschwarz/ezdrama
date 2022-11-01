@@ -64,7 +64,7 @@
     </listRelation>
   </standOff>
   <text>
-    <body>
+    <front>
       <castList>
         <head>Dramatis Personae</head>
         <castItem>Ham</castItem>
@@ -72,6 +72,8 @@
         <castItem>Vikings</castItem>
         <castItem></castItem>
       </castList>
+    </front>
+    <body>
       <div type="act">
         <head>Act 1</head>
         <div type="scene">
