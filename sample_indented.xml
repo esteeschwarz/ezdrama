@@ -47,6 +47,22 @@
       </listChange>
     </revisionDesc>
   </teiHeader>
+  <standOff>
+    <listEvent>
+      <event type="print" when="2022-11-01">
+        <desc/>
+      </event>
+      <event type="premiere" when="2022-11-01">
+        <desc/>
+      </event>
+      <event type="written" when="2022-11-01">
+        <label>INSERT</label>
+      </event>
+    </listEvent>
+    <listRelation>
+      <relation active="INSERT" name="wikidata" passive="INSERT"/>
+    </listRelation>
+  </standOff>
   <text>
     <body>
       <castList>
