@@ -67,7 +67,7 @@ Vikings (singing): Spam, Spam, Spam, Spam, Spam, Spam, Spam, and Spam
 The end
 ```
 
-With EzDrama you encode it like this:
+With EzDrama you manually encode it like this:
 
 ```
 @title Ham 
@@ -161,4 +161,4 @@ And then you automatically get a TEI/XML like this:
 </TEI>
 ```
 
-Such markup takes some time to produce manually. But with EzDrama you can just produce it semi-automatically with just a handful of `#`-s, `@`-s, `$`-s and linebreaks.
+Such markup would take some time to produce manually. But with EzDrama you can just produce it semi-automatically with just a handful of `#`-s, `@`-s, `$`-s and linebreaks.
