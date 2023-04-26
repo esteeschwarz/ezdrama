@@ -4,7 +4,7 @@
       <titleStmt>
         <title type="main">Ham</title>
         <title type="sub">A tragedy</title>
-        <author>William S</author>
+        <author> William S</author>
       </titleStmt>
       <publicationStmt>
         <publisher xml:id="dracor">DraCor</publisher>
@@ -29,34 +29,34 @@
     <profileDesc>
       <particDesc>
         <listPerson>
-          <person xml:id="egg">
-            <persName>Egg:</persName>
+          <person xml:id="ham">
+            <persName>Ham:</persName>
           </person>
           <person xml:id="vikings">
             <persName>Vikings:</persName>
           </person>
-          <person xml:id="ham">
-            <persName>Ham:</persName>
+          <person xml:id="egg">
+            <persName>Egg:</persName>
           </person>
         </listPerson>
       </particDesc>
     </profileDesc>
     <revisionDesc>
       <listChange>
-        <change when="2022-11-04">DESCRIBE CHANGE</change>
+        <change when="2023-04-26">DESCRIBE CHANGE</change>
       </listChange>
     </revisionDesc>
   </teiHeader>
   <standOff>
     <listEvent>
-      <event type="print" when="2022-11-04">
+      <event type="print" when="2023">
         <desc/>
       </event>
-      <event type="premiere" when="2022-11-04">
+      <event type="premiere" when="2023">
         <desc/>
       </event>
-      <event type="written" when="2022-11-04">
-        <label>INSERT</label>
+      <event type="written" when="2023">
+        <desc/>
       </event>
     </listEvent>
     <listRelation>
@@ -64,7 +64,7 @@
     </listRelation>
   </standOff>
   <text>
-    <front>
+    <body>
       <castList>
         <head>Dramatis Personae</head>
         <castItem>Ham</castItem>
@@ -72,8 +72,6 @@
         <castItem>Vikings</castItem>
         <castItem></castItem>
       </castList>
-    </front>
-    <body>
       <div type="act">
         <head>Act 1</head>
         <div type="scene">
