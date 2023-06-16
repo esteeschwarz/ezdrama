@@ -25,27 +25,36 @@ Lines are tagged by special symbols at the beginning:
 
 `$` means new stage direction. NB:  brackets like this `()` are converted to stage directions automatically and do not require any special treatment with metasymbols
 NB 2: the $ will also put into the current stage tag all next lines before any new metasymbol! E.g. 
-```$ Come John.
-He unsheats a sword.
-@John:```
-will create a stage direction
-```<stage>Come John. He unsheats a sword.</stage>```
 
+```
+$ Come John.
+He unsheats a sword.
+@John:
+```
+
+will create a stage direction
+```
+<stage>Come John. He unsheats a sword.</stage>
+```
 
 If you need a short inside-sp stage, use `%`:
 
 `%` means single-line stage direction (only works inside sp):
 
-```@Egg: 
+```
+@Egg: 
 %singing
-Wonderful Spam!```
+Wonderful Spam!
+```
 
 will turn into
 
-```<sp who="#egg">
+```
+<sp who="#egg">
   <speaker>Egg:</speaker>
   <p><stage>singing</stage> Wonderful Spam!</p>
-</sp>```
+</sp>
+```
 
 `@` means the line contains `<speaker>` appearance (possibly with inner stage direction in brackets). This will create an `<sp>` tag with a `<speaker>` inside it and then it will put all the following unmarked lines in the file inside that `<sp>` as character speech
 
