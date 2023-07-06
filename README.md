@@ -70,9 +70,9 @@ NB: dots, colons and such punctuation marks coming right after the <speaker> nam
 
 You can also encode some metadata for the header in the same file:
 
-`@author:` means the line contains the author of the play
+`@author` means the line contains the author of the play
 
-`@title:` means the line contains the main title of the play 
+`@title` means the line contains the main title of the play 
 
 `@subtitle` means the line contains the subtitle of the play
 
