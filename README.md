@@ -12,8 +12,6 @@ Use this [Colab Notebook](https://colab.research.google.com/drive/1ocnE1WFgmHMRO
 
 Plain text plays are usually not uniform enough to be converted to TEI fully automatically. With EzDrama you can manually (or semi-automatically, with simple replaces and regex) add some uniformity without bothering with heavy-weight XML markup. To find out how to do it and how it works check **Syntax** and **Example** below. 
 
-If your text editor of choice is Notepad++, this [user defined language syntax](https://github.com/dracor-org/ezdrama/blob/main/Npp_ezdrama-UDL.xml) will help you with the markup process. To enable EzDrama syntax highlight in your Notepad++ go to `language > user defined language > define your language > import`, import the [file](https://github.com/dracor-org/ezdrama/blob/main/Npp_ezdrama-UDL.xml), and then restart the program and select it from the Language menu.
-
 ## Syntax:
 
 ### 1. Play text
@@ -196,3 +194,7 @@ And then you automatically get a TEI/XML like this:
 ```
 
 Such markup would take some time to produce manually. But with EzDrama you can just produce it semi-automatically with just a handful of `#`-s, `@`-s, `$`-s and linebreaks.
+
+## EzDrama Syntax Highlight in Notepad++
+
+If your text editor of choice is Notepad++, this [user defined language syntax](https://github.com/dracor-org/ezdrama/blob/main/Npp_ezdrama-UDL.xml) will help you with the markup process. To enable EzDrama syntax highlight in your Notepad++ go to `language > user defined language > define your language > import`, import the [file](https://github.com/dracor-org/ezdrama/blob/main/Npp_ezdrama-UDL.xml), and then restart the program and select it from the Language menu.
