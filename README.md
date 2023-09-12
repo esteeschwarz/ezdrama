@@ -69,9 +69,9 @@ NB: dots, colons and such punctuation marks coming right after the <speaker> nam
 
 ### 2. Pagebreaks
 
-any **number (sequence of digits) followed by colon(:) will be converted to a <pb/> tag**
+any **number (sequence of digits) followed by colon(:) will be converted to a `<pb/>` tag**
 
-```Wonderful 5:Spam!``` will turn into ```Wonderful <pb n="5">Spam!```
+```Wonderful 5:Spam!``` will turn into ```Wonderful <pb n="5"/>Spam!```
 
 ### 3. Metadata
 
