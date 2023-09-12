@@ -67,7 +67,13 @@ NB: dots, colons and such punctuation marks coming right after the <speaker> nam
 
 `^` means this and next untagged lines are all part of the `<castList>` (and will be encoded as `<castItems>`)
 
-### 2. Metadata
+### 2. Pagebreaks
+
+any **number (sequence of digits) followed by colon(:) will be converted to a <pb/> tag**
+
+```Wonderful 5:Spam!``` will turn into ```Wonderful <pb n="5">Spam!```
+
+### 3. Metadata
 
 You can also encode some metadata for the header in the same file:
 
@@ -76,6 +82,8 @@ You can also encode some metadata for the header in the same file:
 `@title` means the line contains the main title of the play 
 
 `@subtitle` means the line contains the subtitle of the play
+
+
 
 ## Example
 
