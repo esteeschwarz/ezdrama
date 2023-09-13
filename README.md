@@ -74,7 +74,7 @@ any **number (sequence of digits) followed by colon(:) will be converted to a `<
 ```Wonderful 5:Spam!``` will turn into ```Wonderful <pb n="5"/>Spam!```
 
 
-### 2. XML comments
+### 3. XML comments
 
 EzDrama supports commenting out parts of your file. The syntax here is the standard XML/HTML `<!--comment-->` syntax.
 But it only works for comments that start at the start of the line. Examples that work:
@@ -93,7 +93,8 @@ will turn into
 ```
 Also works **multiline**:
 
-```@Ham: 
+```
+@Ham: 
 <!-- commented
 out
 multi
@@ -110,7 +111,7 @@ will turn into
 </sp>
 ```
 
-### 3. Metadata
+### 4. Metadata
 
 You can also encode some metadata for the header in the same file:
 
@@ -122,7 +123,7 @@ You can also encode some metadata for the header in the same file:
 
 
 
-## Example
+## Example of the entire pipeline:
 
 Here is a simple example. Suppose you have a txt like this:
 
