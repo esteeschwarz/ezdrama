@@ -73,6 +73,43 @@ any **number (sequence of digits) followed by colon(:) will be converted to a `<
 
 ```Wonderful 5:Spam!``` will turn into ```Wonderful <pb n="5"/>Spam!```
 
+
+### 2. XML comments
+
+EzDrama supports commenting out parts of your file. The syntax here is the standard XML/HTML `<!--comment-->` syntax.
+But it only works for comments that start at the start of the line. Examples that work:
+
+```@Ham: 
+<!-- commented out-->
+Lovely Spam!
+```
+will turn into 
+```
+<sp who="#ham">
+  <speaker>Ham:</speaker>
+<!-- commented out-->
+  <p>Lovely <pb n="2"/> Spam!  </p>
+</sp>
+```
+Also works **multiline**:
+
+```@Ham: 
+<!-- commented
+out
+multi
+line
+-->
+Lovely Spam!
+```
+will turn into 
+```
+<sp who="#ham">
+  <speaker>Ham:</speaker>
+<!-- commented out multi line-->
+  <p>Lovely <pb n="2"/> Spam!  </p>
+</sp>
+```
+
 ### 3. Metadata
 
 You can also encode some metadata for the header in the same file:
