@@ -5,12 +5,12 @@ EzDrama format is a Markdown-like (or YAML-like) markup language that serves as 
 ![ezdrama2.png](ezdrama2.png)
 
 ## Head-on start (if you already know what to do!)
-Use this [Colab Notebook](https://colab.research.google.com/drive/1RNvRfTUt9ZDSbqS_nXQxzWH9L2GYr48f?usp=sharing) to convert your play into TEI. That's the easiest way. No coding skills needed.
+Use this [Colab Notebook](https://colab.research.google.com/drive/1RNvRfTUt9ZDSbqS_nXQxzWH9L2GYr48f?usp=sharing) to convert your play into TEI. That's the easiest way. No coding skills needed. Just click buttons. 
 
 
 ## Motivation and Aim:
 
-Plain text plays are usually not uniform enough to be converted to TEI fully automatically. With EzDrama you can manually (or semi-automatically, with simple replaces and regex) add some uniformity without bothering with heavy-weight XML markup. To find out how to do it and how it works check **Syntax** and **Example** below. 
+Plain text plays are usually not uniform enough to be converted to TEI fully automatically. With EzDrama you can manually (or semi-automatically, with simple replaces and regex; or by asking GPT to do that, that also works if you whow examples in the prompt) add some uniformity without bothering with heavy-weight XML markup. To find out how to do it and how it works check **Syntax** and **Example** below. 
 
 ## Syntax:
 
@@ -115,11 +115,11 @@ will turn into
 
 You can also encode some metadata for the header in the same file:
 
-`@author` means the line contains the author of the play
+`@author` means the line contains the author of the play (the name can be separated from `@author` by space or not, the spaces will be stripped)
 
-`@title` means the line contains the main title of the play 
+`@title` means the line contains the main title of the play (the title can be separated from `@title` by space or not, the spaces will be stripped)
 
-`@subtitle` means the line contains the subtitle of the play
+`@subtitle` means the line contains the subtitle of the play (the subtitle can be separated from `@subtitle` by space or not, the spaces will be stripped)
 
 
 
