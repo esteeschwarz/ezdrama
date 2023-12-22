@@ -130,21 +130,18 @@ Here is a simple example. Suppose you have a txt like this:
 ```
 Ham 
 A tragedy
-author William S
+By William S
 Dramatis Personae
 Ham
 Egg
 Vikings
 Act 1
 Scene 1
-Ham: 
-Lovely Spam! 
-Egg: 
-Wonderful Spam!
+Ham: Lovely Spam! 
+Egg: Wonderful Spam!
 Scene 2
 Enter Vikings
-Ham: 
-Egg, Spam! 
+Ham: Egg, Spam! 
 Sausage, and Bacon! 
 Vikings (singing):
 Spam, Spam,(o!) 
