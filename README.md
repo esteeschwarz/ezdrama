@@ -63,7 +63,7 @@ any other line without these special symbols will be treated as direct speech of
 
 NB: dots, colons and such punctuation marks coming right after the <speaker> name will be stripped from the id reference in the `who` attribute automatically. So `@Hamlet.` will сonvert to `<sp who="hamlet"><speaker>Hamlet.</speaker> ... </sp>`
 
-`~` means this and next untagged lines within this speech are poetic text (will be encoded in `<l>`-s instead of a `<p>`)
+`~` means this and next untagged lines (until the next `~`) within this speech will switch the boolean 'prose/verse mode' to opposite from the main (if the whole play is set to prose, the lines after `~` will be poetic text and will be encoded in `<l>`-s instead of a `<p>`; and vice versa; the main mode is set as the boolean 'is_prose' parameter of the Parser object). the next `~` will switch it back to original mode/ 
 
 `^` means this and next untagged lines are all part of the `<castList>` (and will be encoded as `<castItems>`)
 
@@ -128,20 +128,29 @@ You can also encode some metadata for the header in the same file:
 Here is a simple example. Suppose you have a txt like this:
 
 ```
-Ham, a tragedy
-By William S
+Ham 
+A tragedy
+author William S
 Dramatis Personae
 Ham
 Egg
 Vikings
 Act 1
 Scene 1
-Ham: Lovely Spam! 
-Egg: Wonderful Spam!
+Ham: 
+Lovely Spam! 
+Egg: 
+Wonderful Spam!
 Scene 2
 Enter Vikings
-Ham: Egg, Spam, Sausage, and Bacon! 
-Vikings (singing): Spam, Spam, Spam, Spam, Spam, Spam, Spam, and Spam
+Ham: 
+Egg, Spam! 
+Sausage, and Bacon! 
+Vikings (singing):
+Spam, Spam,(o!) 
+Spam, Spam, (loud) 
+Spam, Spam, (quiet) 
+Spam, and Spam
 The end
 ```
 
@@ -164,16 +173,20 @@ Wonderful Spam!
 ##Scene 2
 $Enter Vikings
 @Ham: 
-Egg, Spam, Sausage, and Bacon! 
+Egg, Spam! 
+Sausage, and Bacon! 
 @Vikings (singing):
-Spam, Spam, Spam, Spam, Spam, Spam, Spam, and Spam
+~Spam, Spam,(o!) 
+Spam, Spam, (loud) 
+Spam, Spam, (quiet) 
+Spam, and Spam
 $The end
 ```
 
 And then you automatically get a TEI/XML like this:
 
 ```
-<TEI xml:lang="eng" xmlns="http://www.tei-c.org/ns/1.0">
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
   <teiHeader>
     <fileDesc>
       <titleStmt>
@@ -181,6 +194,26 @@ And then you automatically get a TEI/XML like this:
         <title type="sub">A tragedy</title>
         <author>William S</author>
       </titleStmt>
+      <publicationStmt>
+        <publisher xml:id="dracor">DraCor</publisher>
+        <idno type="URL">https://dracor.org</idno>
+        <availability>
+          <licence>
+            <ab>CC0 1.0</ab>
+            <ref target="https://creativecommons.org/publicdomain/zero/1.0/">
+              Licence</ref>
+          </licence>
+        </availability>
+      </publicationStmt>
+      <sourceDesc>
+        <bibl type="digitalSource">
+          <name>ENTER SOURCE NAME HERE</name>
+          <idno type="URL">ENTER SOURCE URL HERE</idno>
+          <availability status="free">
+            <p>In the public domain.</p>
+          </availability>
+        </bibl>
+      </sourceDesc>
     </fileDesc>
     <profileDesc>
       <particDesc>
@@ -188,31 +221,56 @@ And then you automatically get a TEI/XML like this:
           <person xml:id="egg">
             <persName>Egg</persName>
           </person>
-          <person xml:id="vikings">
-            <persName>Vikings</persName>
-          </person>
           <person xml:id="ham">
             <persName>Ham</persName>
+          </person>
+          <person xml:id="vikings">
+            <persName>Vikings</persName>
           </person>
         </listPerson>
       </particDesc>
     </profileDesc>
+    <revisionDesc>
+      <listChange>
+        <change when="2023-12-22">DESCRIBE CHANGE</change>
+      </listChange>
+    </revisionDesc>
   </teiHeader>
+  <standOff>
+    <listEvent>
+      <event type="print" when="2023">
+        <desc/>
+      </event>
+      <event type="premiere" when="2023">
+        <desc/>
+      </event>
+      <event type="written" when="2023">
+        <desc/>
+      </event>
+    </listEvent>
+    <listRelation>
+      <relation active="INSERT" name="wikidata" passive="INSERT"/>
+    </listRelation>
+  </standOff>
   <text>
-    <body>
+    <front>
       <castList>
         <head>Dramatis Personae</head>
         <castItem>Ham</castItem>
         <castItem>Egg</castItem>
         <castItem>Vikings</castItem>
+        <castItem>
+        </castItem>
       </castList>
+    </front>
+    <body>
       <div type="act">
         <head>Act 1</head>
         <div type="scene">
           <head>Scene 1</head>
           <sp who="#ham">
             <speaker>Ham:</speaker>
-            <p>Lovely Spam! </p>
+            <p>Lovely Spam!</p>
           </sp>
           <sp who="#egg">
             <speaker>Egg:</speaker>
@@ -224,12 +282,16 @@ And then you automatically get a TEI/XML like this:
           <stage>Enter Vikings</stage>
           <sp who="#ham">
             <speaker>Ham:</speaker>
-            <p>Egg, Spam, Sausage, and Bacon! </p>
+            <p>Egg, Spam!</p>
+            <p>Sausage, and Bacon!</p>
           </sp>
           <sp who="#vikings">
-            <speaker>Vikings</speaker>
-            <stage>(singing):</stage>
-            <p>Spam, Spam, Spam, Spam, Spam, Spam, Spam, and Spam</p>
+            <speaker>Vikings:</speaker>
+            <stage>(singing)</stage>
+            <l>Spam, Spam, <stage>(o!)</stage></l>
+            <l>Spam, Spam, <stage>(loud)</stage></l>
+            <l>Spam, Spam, <stage>(quiet)</stage></l>
+            <l>Spam, and Spam</l>
           </sp>
           <stage>The end</stage>
         </div>
