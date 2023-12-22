@@ -5,7 +5,7 @@ EzDrama format is a Markdown-like (or YAML-like) markup language that serves as 
 ![ezdrama2.png](ezdrama2.png)
 
 ## Head-on start (if you already know what to do!)
-Use this [Colab Notebook](https://colab.research.google.com/drive/1ocnE1WFgmHMRO4i1MxhGDvvrpPTILWAP?usp=sharing) to convert your play into TEI. That's the easiest way. No coding skills needed.
+Use this [Colab Notebook](https://colab.research.google.com/drive/1RNvRfTUt9ZDSbqS_nXQxzWH9L2GYr48f?usp=sharing) to convert your play into TEI. That's the easiest way. No coding skills needed.
 
 
 ## Motivation and Aim:
