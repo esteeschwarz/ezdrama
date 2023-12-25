@@ -514,3 +514,8 @@ class Parser():
         with open(newfilepath, 'w') as outfile:
             outfile.write(tree_to_write)
             self.outputname = newfilepath
+
+
+if __name__ == "__main__":
+    parser = Parser()
+    parser.process_file('sample.txt')
