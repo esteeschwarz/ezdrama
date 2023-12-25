@@ -30,14 +30,14 @@
     <profileDesc>
       <particDesc>
         <listPerson>
+          <person sex="MALE" xml:id="vikings">
+            <persName>Vikings</persName>
+          </person>
           <person sex="MALE" xml:id="egg">
             <persName>Egg</persName>
           </person>
           <person sex="MALE" xml:id="ham">
             <persName>Ham</persName>
-          </person>
-          <person sex="MALE" xml:id="vikings">
-            <persName>Vikings</persName>
           </person>
         </listPerson>
       </particDesc>

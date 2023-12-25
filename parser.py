@@ -9,6 +9,16 @@ https://github.com/dracor-org/ezdrama/blob/main/ezdramaparser.ipynb
 """
 
 # =================================
+# Import statements
+# =================================
+
+import re
+from datetime import datetime
+from transliterate import translit
+import yiddish
+from bs4 import BeautifulSoup, Tag
+
+# =================================
 # Parser engine
 # =================================
 
@@ -19,9 +29,9 @@ class Parser():
     (providing the list of lines as strings as argument)
     Or using the '.parse_file' method one can parse a txt file 
     (providing the path to file as argument)'''
-    
-    def __init__(self, 
-                 bracketstages = True, 
+
+    def __init__(self,
+                 bracketstages = True,
                  is_prose = True,
                  dracor_id = 'insert_id',
                  dracor_lang = 'insert_lang'):
@@ -29,14 +39,14 @@ class Parser():
         self.tree_root = Tag(name='TEI')
         self.tree_root['xmlns'] = "http://www.tei-c.org/ns/1.0"
         self.tree_root['xml:id'] = dracor_id 
-        self.tree_root['xml:lang'] = dracor_lang 
+        self.tree_root['xml:lang'] = dracor_lang
         
         ## creating and adding TEI <teiHeader> stub to be filled with metadata later
-        self.create_and_add_header()
-        
+        self.__create_and_add_header()
+
         ## creating and adding TEI <standOff> stub
-        self.add_standoff()
-        
+        self.__add_standoff()
+
         # creating TEI <text> stub to be filled with marked up play text later
         text = Tag(name='text')
         front = Tag(name='front')
@@ -48,29 +58,24 @@ class Parser():
         self.current_lowest_tag = body
         self.current_lowest_div = body
         self.current_lowest_div['level'] = 0
-        
-        
-        
+
         # defining the set of EzDrama special symbols
         self.special_symb_list = '@$^#<'
         self.bracketstages = bracketstages
         
-        #if self.bracketstages: DELETE
-        #    self.special_symb_list +='('
-        
     ### Auxiliary methods for building TEI metadata structure (header/standoff) stub:
     
-    def create_and_add_header(self):
+    def __create_and_add_header(self):
         header = Tag(name='teiHeader')
         fdesc = Tag(name='fileDesc')
         titlestmt = Tag(name='titleStmt')
         fdesc.append(titlestmt)
-        self.add_pbstmt(fdesc)
-        self.add_sourcedesc(fdesc)
+        self.__add_pbstmt(fdesc)
+        self.__add_sourcedesc(fdesc)
         header.append(fdesc)
         self.tree_root.append(header)
         
-    def add_standoff(self):
+    def __add_standoff(self):
         today = datetime.today().strftime('%Y')
         standoff_as_string = f'''
         <standOff>
@@ -94,7 +99,7 @@ class Parser():
         standoff = standoffsoup.standOff
         self.tree_root.append(standoff)
         
-    def add_pbstmt(self, filedesc):
+    def __add_pbstmt(self, filedesc):
         pubstmt_as_string = """
           <publicationStmt>
             <publisher xml:id="dracor">DraCor</publisher>
@@ -111,7 +116,7 @@ class Parser():
         pbstmt = pbsoup.publicationStmt
         filedesc.append(pbstmt)
         
-    def add_sourcedesc(self, filedesc):
+    def __add_sourcedesc(self, filedesc):
         sourcedesc_as_string = """
           <sourceDesc>
             <bibl type="digitalSource">
@@ -128,20 +133,20 @@ class Parser():
         filedesc.append(sd)
         
         
-    def add_title_to_header(self, header, line):
+    def __add_title_to_header(self, header, line):
         titlest = header.find('titleStmt')
         title = Tag(name='title')
         title['type'] = 'main'
         title.append(line[6:].strip())
         titlest.append(title)
         
-    def add_author_to_header(self, header, line):
+    def __add_author_to_header(self, header, line):
         fdesc = header.find('titleStmt')
         author = Tag(name='author')
         author.append(line[7:].strip())
         fdesc.append(author)
         
-    def add_subtitle_to_header(self, header, line):
+    def __add_subtitle_to_header(self, header, line):
         titlest = header.find('titleStmt')
         title = Tag(name='title')
         title['type'] = 'sub'
@@ -158,22 +163,22 @@ class Parser():
         
         for line in ezdramalines:
             if line.startswith('@author'):
-                self.add_author_to_header(self.tree_root.teiHeader, line.strip())
+                self.__add_author_to_header(self.tree_root.teiHeader, line.strip())
             elif line.startswith('@title'):
-                self.add_title_to_header(self.tree_root.teiHeader, line.strip())
+                self.__add_title_to_header(self.tree_root.teiHeader, line.strip())
             elif line.startswith('@subtitle'):
-                self.add_subtitle_to_header(self.tree_root.teiHeader, line.strip())
+                self.__add_subtitle_to_header(self.tree_root.teiHeader, line.strip())
             else:
                 first_character = line[:1] # cutting off the first special symbol
                 rest_of_line = line[1:] # taking the rest of the line
                 if first_character in self.special_symb_list:
-                    self.handle_line_with_markup(first_character, rest_of_line)
+                    self.__handle_line_with_markup(first_character, rest_of_line)
                 else:
-                    if self.lasting_comment and re.search('-->\s*$', line):
-                        line = re.sub('(\<\!--|--\>)', '',line)
+                    if self.lasting_comment and re.search(r'-->\s*$', line):
+                        line = re.sub(r'(\<\!--|--\>)', '',line)
                         self.current_lowest_tag.append(line)
-                        current_lowest_tag = current_lowest_div
-                        lasting_comment = False
+                        self.current_lowest_tag = self.current_lowest_div
+                        self.lasting_comment = False
                     else:
                         self.current_lowest_tag.append(line)
         
@@ -182,12 +187,12 @@ class Parser():
         with open(path_to_file) as openfile:
             file_lines = openfile.readlines()
         self.parse_lines(file_lines)
-        self.post_process()
+        self.__post_process()
         self.output_to_file(path_to_file.replace('.txt', '.xml'))
         
           
         
-    def handle_line_with_markup(self, first_character, rest_of_line):
+    def __handle_line_with_markup(self, first_character, rest_of_line):
         ''' processes a line with specific ezdrama markup symbol at the start
         writes it into current lowest tag or current lowest div
         updates current lowest tag/div'''
@@ -220,10 +225,10 @@ class Parser():
             if rest_of_line.startswith('!--'):
                 new_comment = Tag(name='comment')
                 self.current_lowest_div.append(new_comment)
-                if not re.search('-->\s*$', rest_of_line):
+                if not re.search(r'-->\s*$', rest_of_line):
                     self.lasting_comment=True
-                    current_lowest_tag = new_comment
-                new_comment.append(re.sub('(\<?\!--|--\>)', '', rest_of_line))
+                    self.current_lowest_tag = new_comment
+                new_comment.append(re.sub(r'(\<?\!--|--\>)', '', rest_of_line))
             else:
                 self.current_lowest_tag.append(rest_of_line)
 
@@ -232,7 +237,7 @@ class Parser():
             new_div = Tag(name='div')
             head = Tag(name='head')
             head.append(rest_of_line.strip('#'))
-            new_div['level'] = self.get_div_level(rest_of_line)
+            new_div['level'] = self.__get_div_level(rest_of_line)
             new_div.append(head)
             if new_div['level'] > self.current_lowest_div['level']:
                 self.current_lowest_div.append(new_div)
@@ -246,7 +251,7 @@ class Parser():
     
     ## Aux technical processing functions
         
-    def add_spaces_inline_stages(self, tree_as_string):
+    def __add_spaces_inline_stages(self, tree_as_string):
         '''some technical fix which was at some point 
         asked for by the draCor maintainter AFAIR''' 
 
@@ -254,27 +259,27 @@ class Parser():
         tree_as_string = re.sub(r'([^\s<>])<stage>', r'\1 <stage>', tree_as_string)
         return tree_as_string
     
-    def get_div_level(self, line):
+    def __get_div_level(self, line):
         div_level = 1 # since we already located one # and since 0 is <body> level in this model
         for char in line:
             if char == '#':
                 div_level+=1
             else:
                 break
-        return(div_level)
+        return div_level
                 
 
     ### Post-processing functions 
     
-    def post_process(self):
+    def __post_process(self):
         set_of_char_pairs = set() # set of ID + charname pairs for particDesc
         
-        self.add_cast_items()
+        self.__add_cast_items()
         
-        del(self.tree_root.find('body')['level'])
+        del self.tree_root.find('body')['level']
         
         for sp in self.tree_root.find_all('sp'):
-            self.post_process_sp(sp)
+            self.__post_process_sp(sp)
             if 'who' in sp.attrs:
                 set_of_char_pairs.add((sp['who'], sp.speaker.text.strip('.,:!; '))) 
         for div in self.tree_root.find_all('div'):
@@ -289,11 +294,11 @@ class Parser():
             elif div['level'] == 3:
                 div.attrs = {}
                 div['type'] = 'subscene'
-        self.add_particdesc_to_header(set_of_char_pairs)
-        self.add_rev_desc()    
+        self.__add_particdesc_to_header(set_of_char_pairs)
+        self.__add_rev_desc()    
         
     
-    def add_cast_items(self):
+    def __add_cast_items(self):
         castList = self.tree_root.find('castList')
         if castList:
             casttext = castList.text
@@ -310,7 +315,7 @@ class Parser():
                 castList.append(castItem)
     
     
-    def add_rev_desc(self):
+    def __add_rev_desc(self):
         revdesc_as_string = f"""
         <revisionDesc>
              <listChange>
@@ -322,7 +327,7 @@ class Parser():
         self.tree_root.teiHeader.append(rd)
         
         
-    def add_particdesc_to_header(self, set_of_char_pairs):
+    def __add_particdesc_to_header(self, set_of_char_pairs):
         #print(set_of_char_pairs)
         profileDesc = Tag(name = 'profileDesc')
         particDesc = Tag(name = 'particDesc')
@@ -332,7 +337,7 @@ class Parser():
         for pair in set_of_char_pairs:
             person = Tag(name = 'person')
             person['xml:id'] = pair[0].strip('#')
-            person['sex'] = self.guess_gender_stupid(person['xml:id'])
+            person['sex'] = self.__guess_gender_stupid(person['xml:id'])
             persName = Tag(name = 'persName')
             person.append(persName)
             #print(pair[1])
@@ -342,10 +347,10 @@ class Parser():
         teiHeader.append(profileDesc)
         
     
-    def handle_speaker_in_sp(self, sp, first_line):
+    def __handle_speaker_in_sp(self, sp, first_line):
         speaker = Tag(name='speaker')
         sp.append(speaker)
-        check_stage = re.search('([^()]+)(\(.+?\))([.,:!;])?', first_line)
+        check_stage = re.search(r'([^()]+)(\(.+?\))([.,:!;])?', first_line)
         if check_stage and self.bracketstages:
             speaker.append(check_stage.group(1).strip())
             inside_stage = Tag(name='stage')
@@ -358,14 +363,14 @@ class Parser():
         else:
             speaker.append(first_line.strip())
             
-        self.transliterate_speaker_ids(sp, speaker)
+        self.__transliterate_speaker_ids(sp, speaker)
         
         
             
-    def transliterate_speaker_ids(self, sp, speaker):
+    def __transliterate_speaker_ids(self, sp, speaker):
         
         ## ukrainian ids transliterated
-        if re.search('[йцукенгшщзхъфывапролджэячсмитью]', speaker.text.lower()):
+        if re.search(r'[йцукенгшщзхъфывапролджэячсмитью]', speaker.text.lower()):
             clean_who = self.clean_after_translit(translit(speaker.text.strip('. '), 'uk', 
                                                       reversed=True)).lower()
             clean_who = clean_who.strip('.,:!; ')
@@ -378,18 +383,18 @@ class Parser():
             clean_who = speaker.text.strip('.,:!; ').lower()
             
             
-        clean_who = self.fix_starting_w_number(clean_who)
+        clean_who = self.__fix_starting_w_number(clean_who)
         
         sp['who'] = f'#{clean_who}'
         
         
-    def fix_starting_w_number(self, clean_who): ##  1-ja_divchyna etc.
-        match = re.match('(\d+.*?)(_)(.+)', clean_who)
+    def __fix_starting_w_number(self, clean_who): ##  1-ja_divchyna etc.
+        match = re.match(r'(\d+.*?)(_)(.+)', clean_who)
         if match is not None:
             clean_who = f'{match.group(3)}{match.group(2)}{match.group(1)}'
         return clean_who
         
-    def clean_after_translit(self, line):
+    def __clean_after_translit(self, line):
         line = line.replace('і', 'i')
         line = line.replace('ї', 'i')
         line = line.replace('і', 'i')
@@ -405,7 +410,7 @@ class Parser():
         return line
         
         
-    def handle_line_with_brackets(self, speechtext, check_inline_brackets):        
+    def __handle_line_with_brackets(self, speechtext, check_inline_brackets):        
         for triplet in check_inline_brackets:
             if len(triplet[0]) > 0:
                 speechtext.append(triplet[0])
@@ -417,26 +422,26 @@ class Parser():
                 speechtext.append(triplet[2])
 
         
-    def guess_gender_stupid(self, someid):
+    def __guess_gender_stupid(self, someid):
         if someid.endswith('a'):
             return 'FEMALE'
         return 'MALE'
         
-    def add_line_to_speech(self, line, sp, line_is_prose):
+    def __add_line_to_speech(self, line, sp, line_is_prose):
         if line_is_prose:
             speechtext = Tag(name='p')
         else:
             speechtext = Tag(name='l')
         if len(line) > 0:
-            check_inline_brackets  = re.findall('([^()]*)(\(.+?\)[.,:!;]?)([^()]*)', line)
+            check_inline_brackets  = re.findall(r'([^()]*)(\(.+?\)[.,:!;]?)([^()]*)', line)
             if check_inline_brackets and self.bracketstages:
-                self.handle_line_with_brackets(speechtext, check_inline_brackets)
+                self.__handle_line_with_brackets(speechtext, check_inline_brackets)
             else:
                 speechtext.append(line)
             sp.append(speechtext)
             
             
-    def handle_speech_in_sp(self, sp, text_split_in_lines):
+    def __handle_speech_in_sp(self, sp, text_split_in_lines):
         current_speech_is_prose = self.is_prose # memorising the global prose or verse mode
         for line in text_split_in_lines[1:]:
             if line.startswith('%'):
@@ -446,40 +451,40 @@ class Parser():
             elif line.startswith('~'): # switch from main mode (prose or verse) to the opposite
                 current_speech_is_prose = not current_speech_is_prose 
                 line = line.strip('~') # removing the special switch symbol
-                self.add_line_to_speech(line, sp, current_speech_is_prose)
+                self.__add_line_to_speech(line, sp, current_speech_is_prose)
             else:
-                self.add_line_to_speech(line, sp, current_speech_is_prose)
+                self.__add_line_to_speech(line, sp, current_speech_is_prose)
         
         
-    def post_process_sp(self, sp):
+    def __post_process_sp(self, sp):
         text_of_sp = sp.text
         sp.clear()
         text_split_in_lines = text_of_sp.split('\n')
         first_line = text_split_in_lines[0]
         
         # handle speaker line
-        self.handle_speaker_in_sp(sp, first_line)
+        self.__handle_speaker_in_sp(sp, first_line)
         
         # handle the rest of the sp
-        self.handle_speech_in_sp(sp, text_split_in_lines)
+        self.__handle_speech_in_sp(sp, text_split_in_lines)
         
         
         
     ## Data output methods
         
-    def indent_dracor_style(self):
+    def __indent_dracor_style(self):
         
         output = self.tree_root.prettify()
         
-        output = re.sub('(<[^/]+?>)\n\s+([^<>\s])', '\\1\\2', output) ## removing linebreak after the opening tag
-        output = re.sub('([^<>\s])\n\s+(</.+?>)', '\\1\\2', output) ## removing linebreak before the closing tag
+        output = re.sub(r'(<[^/]+?>)\n\s+([^<>\s])', '\\1\\2', output) ## removing linebreak after the opening tag
+        output = re.sub(r'([^<>\s])\n\s+(</.+?>)', '\\1\\2', output) ## removing linebreak before the closing tag
         
         ## fixing excessive indentation in speakers and stages
         
-        output = re.sub('(<speaker>)([^<>]+)\s*\n\s*([^<>]+)(</speaker>)', '\\1\\2\\3\\4', output)
+        output = re.sub(r'(<speaker>)([^<>]+)\s*\n\s*([^<>]+)(</speaker>)', '\\1\\2\\3\\4', output)
         
         ## inline stage dedent
-        output = re.sub('([\n\s]+)(<stage type="inline">)([^<>]+)(</stage>)([\n\s]+)',
+        output = re.sub(r'([\n\s]+)(<stage type="inline">)([^<>]+)(</stage>)([\n\s]+)',
                         '<stage>\\3\\4', output)
         
         
@@ -504,8 +509,8 @@ class Parser():
         #    self.indent_and_write(newfilepath)
         #else:
         #    return self.tree_root.prettify() 
-        tree_to_write = self.indent_dracor_style()
-        tree_to_write = self.add_spaces_inline_stages(tree_to_write)
+        tree_to_write = self.__indent_dracor_style()
+        tree_to_write = self.__add_spaces_inline_stages(tree_to_write)
         with open(newfilepath, 'w') as outfile:
             outfile.write(tree_to_write)
             self.outputname = newfilepath
