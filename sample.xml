@@ -1,4 +1,4 @@
-<TEI xmlns="http://www.tei-c.org/ns/1.0">
+<TEI xml:id="insert_id" xml:lang="insert_lang" xmlns="http://www.tei-c.org/ns/1.0">
   <teiHeader>
     <fileDesc>
       <titleStmt>
@@ -30,13 +30,13 @@
     <profileDesc>
       <particDesc>
         <listPerson>
-          <person sex="MALE" xml:id="egg">
+          <person xml:id="egg">
             <persName>Egg</persName>
           </person>
-          <person sex="MALE" xml:id="ham">
+          <person xml:id="ham">
             <persName>Ham</persName>
           </person>
-          <person sex="MALE" xml:id="vikings">
+          <person xml:id="vikings">
             <persName>Vikings</persName>
           </person>
         </listPerson>
@@ -44,7 +44,7 @@
     </profileDesc>
     <revisionDesc>
       <listChange>
-        <change when="2023-12-22">DESCRIBE CHANGE</change>
+        <change when="2023-12-25">DESCRIBE CHANGE</change>
       </listChange>
     </revisionDesc>
   </teiHeader>
