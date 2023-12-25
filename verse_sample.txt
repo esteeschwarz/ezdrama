@@ -1,0 +1,38 @@
+@title Damn 
+@subtitle A comedy
+@author William S
+
+$Takes place in the garden
+
+#Act 1
+##Scene 1
+@Poet A: 
+When in the chronicle of wasted time
+I see descriptions of the fairest wights,
+And beauty making beautiful old rhyme
+In praise of ladies dead, and lovely knights
+@Poet B: 
+Then, in the blazon of sweet beauty’s best,
+Of hand, of foot, of lip, of eye, of brow,
+I see their antique pen would have express’d
+Even such a beauty as you master now.
+##Scene 2
+$Enter Poet C
+@Poet C: 
+So all their praises are but prophecies
+Of this our time, all you prefiguring;
+And, for they look’d but with divining eyes,
+They had not skill enough your worth to sing: 
+@Poet B (surprised):
+For we, which now behold these present days,
+Had eyes to wonder, but lack tongues to praise.
+@Prosaic
+~I will speak in prose
+And though I will produce more than one line,
+they will be tagged as paragraphs, not verse lines in TEI.
+@Poet B:
+~I can also do prose,
+Look! I'm being so prosaic...
+~But now I switch to verse
+And show you no remorse
+$Curtain

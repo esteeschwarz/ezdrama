@@ -1,0 +1,128 @@
+<TEI xml:id="insert_id" xml:lang="insert_lang" xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title type="main">Damn</title>
+        <title type="sub">A comedy</title>
+        <author>William S</author>
+      </titleStmt>
+      <publicationStmt>
+        <publisher xml:id="dracor">DraCor</publisher>
+        <idno type="URL">https://dracor.org</idno>
+        <availability>
+          <licence>
+            <ab>CC0 1.0</ab>
+            <ref target="https://creativecommons.org/publicdomain/zero/1.0/">
+              Licence</ref>
+          </licence>
+        </availability>
+      </publicationStmt>
+      <sourceDesc>
+        <bibl type="digitalSource">
+          <name>ENTER SOURCE NAME HERE</name>
+          <idno type="URL">ENTER SOURCE URL HERE</idno>
+          <availability status="free">
+            <p>In the public domain.</p>
+          </availability>
+        </bibl>
+      </sourceDesc>
+    </fileDesc>
+    <profileDesc>
+      <particDesc>
+        <listPerson>
+          <person xml:id="prosaic">
+            <persName>Prosaic</persName>
+          </person>
+          <person xml:id="poet b">
+            <persName>Poet B</persName>
+          </person>
+          <person xml:id="poet a">
+            <persName>Poet A</persName>
+          </person>
+          <person xml:id="poet c">
+            <persName>Poet C</persName>
+          </person>
+        </listPerson>
+      </particDesc>
+    </profileDesc>
+    <revisionDesc>
+      <listChange>
+        <change when="2023-12-25">DESCRIBE CHANGE</change>
+      </listChange>
+    </revisionDesc>
+  </teiHeader>
+  <standOff>
+    <listEvent>
+      <event type="print" when="2023">
+        <desc/>
+      </event>
+      <event type="premiere" when="2023">
+        <desc/>
+      </event>
+      <event type="written" when="2023">
+        <desc/>
+      </event>
+    </listEvent>
+    <listRelation>
+      <relation active="INSERT" name="wikidata" passive="INSERT"/>
+    </listRelation>
+  </standOff>
+  <text>
+    <front>
+    </front>
+    <body>
+      <stage>Takes place in the garden</stage>
+      <div type="act">
+        <head>Act 1</head>
+        <div type="scene">
+          <head>Scene 1</head>
+          <sp who="#poet a">
+            <speaker>Poet A:</speaker>
+            <l>When in the chronicle of wasted time</l>
+            <l>I see descriptions of the fairest wights,</l>
+            <l>And beauty making beautiful old rhyme</l>
+            <l>In praise of ladies dead, and lovely knights</l>
+          </sp>
+          <sp who="#poet b">
+            <speaker>Poet B:</speaker>
+            <l>Then, in the blazon of sweet beauty’s best,</l>
+            <l>Of hand, of foot, of lip, of eye, of brow,</l>
+            <l>I see their antique pen would have express’d</l>
+            <l>Even such a beauty as you master now.</l>
+          </sp>
+        </div>
+        <div type="scene">
+          <head>Scene 2</head>
+          <stage>Enter Poet C</stage>
+          <sp who="#poet c">
+            <speaker>Poet C:</speaker>
+            <l>So all their praises are but prophecies</l>
+            <l>Of this our time, all you prefiguring;</l>
+            <l>And, for they look’d but with divining eyes,</l>
+            <l>They had not skill enough your worth to sing:</l>
+          </sp>
+          <sp who="#poet b">
+            <speaker>Poet B:</speaker>
+            <stage>(surprised)</stage>
+            <l>For we, which now behold these present days,</l>
+            <l>Had eyes to wonder, but lack tongues to praise.</l>
+          </sp>
+          <sp who="#prosaic">
+            <speaker>Prosaic</speaker>
+            <p>I will speak in prose</p>
+            <p>And though I will produce more than one line,</p>
+            <p>they will be tagged as paragraphs, not verse lines in TEI.</p>
+          </sp>
+          <sp who="#poet b">
+            <speaker>Poet B:</speaker>
+            <p>I can also do prose,</p>
+            <p>Look! I'm being so prosaic...</p>
+            <l>But now I switch to verse</l>
+            <l>And show you no remorse</l>
+          </sp>
+          <stage>Curtain</stage>
+        </div>
+      </div>
+    </body>
+  </text>
+</TEI>
