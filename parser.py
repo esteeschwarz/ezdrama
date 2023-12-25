@@ -9,22 +9,6 @@ https://github.com/dracor-org/ezdrama/blob/main/ezdramaparser.ipynb
 """
 
 # =================================
-# Import statements
-# =================================
-
-import sys
-import re
-import os
-from datetime import datetime
-#!pip install transliterate if not installed
-from transliterate import translit
-#!pip install yiddish if not installed
-import yiddish
-#!pip install bs4 if not installed
-from bs4 import BeautifulSoup, Tag
-
-
-# =================================
 # Parser engine
 # =================================
 
