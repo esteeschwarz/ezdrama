@@ -380,7 +380,7 @@ class Parser():
         
         ## ukrainian ids transliterated
         if re.search(r'[йцукенгшщзхъфывапролджэячсмитью]', speaker.text.lower()):
-            clean_who = self.clean_after_translit(translit(speaker.text.strip('. '), 'uk', 
+            clean_who = self.__clean_after_translit(translit(speaker.text.strip('. '), 'uk', 
                                                       reversed=True)).lower()
             clean_who = clean_who.strip('.,:!; ')
 
