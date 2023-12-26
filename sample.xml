@@ -30,21 +30,21 @@
     <profileDesc>
       <particDesc>
         <listPerson>
-          <person sex="MALE" xml:id="ham">
-            <persName>Ham</persName>
-          </person>
           <person sex="MALE" xml:id="egg">
             <persName>Egg</persName>
           </person>
           <person sex="MALE" xml:id="vikings">
             <persName>Vikings</persName>
           </person>
+          <person sex="MALE" xml:id="ham">
+            <persName>Ham</persName>
+          </person>
         </listPerson>
       </particDesc>
     </profileDesc>
     <revisionDesc>
       <listChange>
-        <change when="2023-12-25">DESCRIBE CHANGE</change>
+        <change when="2023-12-26">DESCRIBE CHANGE</change>
       </listChange>
     </revisionDesc>
   </teiHeader>

@@ -25,10 +25,11 @@ from bs4 import BeautifulSoup, Tag
 class Parser():
     '''This is the main class, the EzDrama to TEI/XML parser
     It generates an empty TEI/XML tree upon initalization
-    And then using the '.parse_lines' method one can parse a list of ezdrama lines 
-    (providing the list of lines as strings as argument)
-    Or using the '.parse_file' method one can parse a txt file 
-    (providing the path to file as argument)'''
+    And then using the '.parse_file' method one can parse a txt file 
+    (providing the path to file as argument)
+
+    Or using the lower-level '.parse_lines_to_xml' method one can parse 
+    a list of ezdrama lines (providing the list of strings as argument)'''
 
     def __init__(self,
                  bracketstages = True,
@@ -155,9 +156,7 @@ class Parser():
         
     ### Main parsing methods:
         
-    def parse_lines(self, ezdramalines):
-        '''this method takes list of lines containing a whole play 
-        in ezdrama format (see sample here: in the README: https://github.com/dracor-org/ezdrama)'''
+    def __parse_lines(self, ezdramalines):
                     
         self.lasting_comment = False # for multiline comment parsing
         
@@ -186,9 +185,19 @@ class Parser():
     def process_file(self, path_to_file):
         with open(path_to_file) as openfile:
             file_lines = openfile.readlines()
-        self.parse_lines(file_lines)
-        self.__post_process()
+        self.parse_lines_to_xml(file_lines)
         self.output_to_file(path_to_file.replace('.txt', '.xml'))
+
+
+    def parse_lines_to_xml(self, ezdramalines):
+        '''this method takes list of lines 
+        containing a whole play 
+        in ezdrama format (see sample 
+        in the README: https://github.com/dracor-org/ezdrama)'''
+        self.__parse_lines(ezdramalines)
+        self.__post_process()
+        pretty_tree = self.__indent_dracor_style()
+        self.tree_to_write = self.__add_spaces_inline_stages(pretty_tree)
         
           
         
@@ -505,14 +514,8 @@ class Parser():
     
         
     def output_to_file(self, newfilepath):
-        #if indent_with_formatter:
-        #    self.indent_and_write(newfilepath)
-        #else:
-        #    return self.tree_root.prettify() 
-        tree_to_write = self.__indent_dracor_style()
-        tree_to_write = self.__add_spaces_inline_stages(tree_to_write)
         with open(newfilepath, 'w') as outfile:
-            outfile.write(tree_to_write)
+            outfile.write(self.tree_to_write)
             self.outputname = newfilepath
 
 

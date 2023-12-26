@@ -30,16 +30,16 @@
     <profileDesc>
       <particDesc>
         <listPerson>
-          <person xml:id="prosaic">
+          <person sex="MALE" xml:id="prosaic">
             <persName>Prosaic</persName>
           </person>
-          <person xml:id="poet b">
+          <person sex="MALE" xml:id="poet b">
             <persName>Poet B</persName>
           </person>
-          <person xml:id="poet a">
+          <person sex="FEMALE" xml:id="poet a">
             <persName>Poet A</persName>
           </person>
-          <person xml:id="poet c">
+          <person sex="MALE" xml:id="poet c">
             <persName>Poet C</persName>
           </person>
         </listPerson>
@@ -47,7 +47,7 @@
     </profileDesc>
     <revisionDesc>
       <listChange>
-        <change when="2023-12-25">DESCRIBE CHANGE</change>
+        <change when="2023-12-26">DESCRIBE CHANGE</change>
       </listChange>
     </revisionDesc>
   </teiHeader>
