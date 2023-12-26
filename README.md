@@ -26,7 +26,7 @@ Lines are tagged by special symbols at the beginning:
 
 `###` means third level div... (technically the number of nesting levels is not limited)
 
-`$` means **new stage direction**. NB:  brackets like this `()` are converted to stage directions automatically and do not require any special treatment with metasymbols
+`$` means **new stage direction**. NB:  brackets like this `()` are converted to stage directions automatically and do not require any special treatment with metasymbols. In case you don't want brackets to be treated as metasymbols, initialize Parser with `bracketstages = False` (this parameter is True by default)
 NB 2: the $ will also put into the current stage tag all next lines before any new metasymbol! E.g. 
 
 ```
@@ -301,6 +301,10 @@ And then you automatically get a TEI/XML like this:
 ```
 
 Such markup would take some time to produce manually. But with EzDrama you can just produce it semi-automatically with just a handful of `#`-s, `@`-s, `$`-s and linebreaks.
+
+## How do I run the EzDrama parser
+
+Aside from the Colab version mentioned above, there's also an example jupyter notebook [in this repo](ezdramaparser.ipynb). Both use the [same code](parser.py)
 
 ## EzDrama Syntax Highlight in Notepad++
 
