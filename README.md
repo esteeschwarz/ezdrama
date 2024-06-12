@@ -305,7 +305,7 @@ Such markup would take some time to produce manually. But with EzDrama you can j
 
 Use this [Colab Notebook](https://colab.research.google.com/drive/1RNvRfTUt9ZDSbqS_nXQxzWH9L2GYr48f?usp=sharing) to convert your play into TEI. That's the easiest way. No coding skills needed. Just click buttons. Alternatively, you can try [this basic web-app](https://ezdrama.eu.pythonanywhere.com/) (warning, alpha-version, might break)
 
-Aside from the Colab version mentioned above, there's also an example standalone jupyter notebook [in this repo](ezdramaparser.ipynb). Both use the [same code](parser.py) for easydrama engine.
+Aside from the Colab version mentioned above, there's also an example standalone [jupyter notebook](ezdramaparser.ipynb). Both use the [same code](parser.py) for easydrama engine.
 
 ## EzDrama Syntax Highlight in Notepad++
 
