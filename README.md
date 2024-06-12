@@ -8,7 +8,7 @@ EzDrama format is a Markdown-like (or YAML-like) markup language that serves as 
 
 Plain text plays are usually not uniform enough to be converted to TEI fully automatically. With EzDrama you can manually (or semi-automatically, with simple replaces and regex; or by asking GPT to do that, that also works if you whow examples in the prompt) add some uniformity without bothering with heavy-weight XML markup. To find out how to do it and how it works check **Syntax** and **Example** below. 
 
-## Head-on start (if you already know what to do!)
+## Head-on start (if you already have ezdrama markup and know what you are doing)
 Use this [Colab Notebook](https://colab.research.google.com/drive/1RNvRfTUt9ZDSbqS_nXQxzWH9L2GYr48f?usp=sharing) to convert your play into TEI. That's the easiest way. No coding skills needed. Just click buttons. 
 
 Alternatively, you can try [this basic web-app](https://ezdrama.eu.pythonanywhere.com/) (warning, alpha-version, might break)
