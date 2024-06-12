@@ -390,6 +390,7 @@ class Parser():
             clean_who = re.sub(r'[\u0591-\u05BD\u05C1\u05C2\\u05C7]', ' ', clean_who)
         else:
             clean_who = speaker.text.strip('.,:!; ').lower()
+            clean_who = self.__clean_after_translit(clean_who)
             
             
         clean_who = self.__fix_starting_w_number(clean_who)
