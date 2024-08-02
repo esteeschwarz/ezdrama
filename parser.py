@@ -14,9 +14,17 @@ https://github.com/dracor-org/ezdrama/blob/main/ezdramaparser.ipynb
 
 import re
 from datetime import datetime
+import transliterate
 from transliterate import translit
 import yiddish
+#import html5lib
 from bs4 import BeautifulSoup, Tag
+
+import sys
+#print(sys.argv[0])  # Prints 'my_script.py'
+#print(sys.argv[1])  # Prints 'arg1'
+#print(sys.argv[2])  # Prints 'arg2'
+
 
 # =================================
 # Parser engine
@@ -522,4 +530,4 @@ class Parser():
 
 if __name__ == "__main__":
     parser = Parser()
-    parser.process_file('sample.txt')
+    parser.process_file(sys.argv[1])
