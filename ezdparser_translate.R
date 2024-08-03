@@ -2,18 +2,18 @@ library(xml2)
 library(stringr)
 library(rvest)
 
-_L <- 'castList'
-_K <- '-->\\s*$'
-_J <- 'who'
-_I <- 'xml:id'
-_H <- '\n'
-_G <- '.,:!; '
-_F <- 'stage'
-_E <- 'titleStmt'
-_D <- TRUE
-_C <- 'xml'
-_B <- 'type'
-_A <- 'level'
+a_L <- 'castList'
+a_K <- '-->\\s*$'
+a_J <- 'who'
+a_I <- 'xml:id'
+a_H <- '\n'
+a_G <- '.,:!; '
+a_F <- 'stage'
+a_E <- 'titleStmt'
+a_D <- TRUE
+a_C <- 'xml'
+a_B <- 'type'
+a_A <- 'level'
 
 Parser <- R6::R6Class("Parser",
                       public = list(
@@ -25,9 +25,9 @@ Parser <- R6::R6Class("Parser",
                         special_symb_list = NULL,
                         bracketstages = NULL,
                         
-                        initialize = function(bracketstages = .D, is_prose = .D, dracor_id = 'insert_id', dracor_lang = 'insert_lang') {
+                        initialize = function(bracketstages = a_D, is_prose = a_D, dracor_id = 'insert_id', dracor_lang = 'insert_lang') {
                           self$tree_root <- xml_new_root("TEI", ns = "http://www.tei-c.org/ns/1.0")
-                          xml_set_attr(self$tree_root, .I, dracor_id)
+                          xml_set_attr(self$tree_root, a_I, dracor_id)
                           xml_set_attr(self$tree_root, "xml:lang", dracor_lang)
                           self$create_and_add_header()
                           self$add_standoff()
@@ -35,11 +35,9 @@ Parser <- R6::R6Class("Parser",
                           D <- xml_add_child(B, "front")
                           C <- xml_add_child(B, "body")
                           self$is_prose <- is_prose
-                          xml_add_child(B, D)
-                          xml_add_child(B, C)
                           self$current_lowest_tag <- C
                           self$current_lowest_div <- C
-                          xml_set_attr(self$current_lowest_div, .A, 0)
+                          self$current_lowest_div[a_A] <- 0
                           self$special_symb_list <- '@$^#<'
                           self$bracketstages <- bracketstages
                         },
@@ -47,11 +45,9 @@ Parser <- R6::R6Class("Parser",
                         create_and_add_header = function() {
                           C <- xml_add_child(self$tree_root, "teiHeader")
                           A <- xml_add_child(C, "fileDesc")
-                          D <- xml_add_child(A, .E)
+                          D <- xml_add_child(A, a_E)
                           self$add_pbstmt(A)
                           self$add_sourcedesc(A)
-                          xml_add_child(C, A)
-                          xml_add_child(self$tree_root, C)
                         },
                         
                         add_standoff = function() {
@@ -91,8 +87,7 @@ Parser <- R6::R6Class("Parser",
             </availability>
           </publicationStmt>'
                           B <- read_xml(A)
-                          C <- xml_find_first(B, "//publicationStmt")
-                          xml_add_child(filedesc, C)
+                          xml_add_child(filedesc, B)
                         },
                         
                         add_sourcedesc = function(filedesc) {
@@ -107,28 +102,24 @@ Parser <- R6::R6Class("Parser",
             </bibl>
           </sourceDesc>'
                           B <- read_xml(A)
-                          C <- xml_find_first(B, "//sourceDesc")
-                          xml_add_child(filedesc, C)
+                          xml_add_child(filedesc, B)
                         },
                         
                         add_title_to_header = function(header, line) {
-                          B <- xml_find_first(header, .E)
-                          A <- xml_add_child(B, "title")
-                          xml_set_attr(A, .B, 'main')
-                          xml_add_child(A, str_trim(substr(line, 7, nchar(line))))
+                          B <- xml_find_first(header, a_E)
+                          A <- xml_add_child(B, "title", line[6:nchar(line)])
+                          xml_set_attr(A, a_B, 'main')
                         },
                         
                         add_author_to_header = function(header, line) {
-                          B <- xml_find_first(header, .E)
-                          A <- xml_add_child(B, "author")
-                          xml_add_child(A, str_trim(substr(line, 8, nchar(line))))
+                          B <- xml_find_first(header, a_E)
+                          A <- xml_add_child(B, "author", line[7:nchar(line)])
                         },
                         
                         add_subtitle_to_header = function(header, line) {
-                          B <- xml_find_first(header, .E)
-                          A <- xml_add_child(B, "title")
-                          xml_set_attr(A, .B, 'sub')
-                          xml_add_child(A, str_trim(substr(line, 10, nchar(line))))
+                          B <- xml_find_first(header, a_E)
+                          A <- xml_add_child(B, "title", line[9:nchar(line)])
+                          xml_set_attr(A, a_B, 'sub')
                         },
                         
                         parse_lines = function(ezdramalines) {
@@ -145,7 +136,7 @@ Parser <- R6::R6Class("Parser",
                               E <- substr(B, 2, nchar(B))
                               if (C %in% strsplit(self$special_symb_list, "")[[1]]) {
                                 self$handle_line_with_markup(C, E)
-                              } else if (self$lasting_comment && grepl(.K, B)) {
+                              } else if (self$lasting_comment && grepl(a_K, B)) {
                                 B <- gsub('(\\<\\!--|--\\>)', '', B)
                                 xml_add_child(self$current_lowest_tag, B)
                                 self$current_lowest_tag <- self$current_lowest_div
@@ -175,7 +166,7 @@ Parser <- R6::R6Class("Parser",
                           D <- first_character
                           B <- rest_of_line
                           if (D == '$') {
-                            E <- xml_add_child(self$current_lowest_div, "stage")
+                            E <- xml_add_child(self$current_lowest_div, a_F)
                             xml_add_child(E, str_trim(B))
                             self$current_lowest_tag <- E
                           } else if (D == '@') {
@@ -183,13 +174,13 @@ Parser <- R6::R6Class("Parser",
                             xml_add_child(F, B)
                             self$current_lowest_tag <- F
                           } else if (D == '^') {
-                            G <- xml_add_child(self$tree_root$front, .L)
+                            G <- xml_add_child(self$tree_root$front, a_L)
                             xml_add_child(G, B)
                             self$current_lowest_tag <- G
                           } else if (D == '<') {
                             if (startsWith(B, '!--')) {
                               H <- xml_add_child(self$current_lowest_div, "comment")
-                              if (!grepl(.K, B)) {
+                              if (!grepl(a_K, B)) {
                                 self$lasting_comment <- TRUE
                                 self$current_lowest_tag <- H
                               }
@@ -199,15 +190,14 @@ Parser <- R6::R6Class("Parser",
                             }
                           } else if (D == '#') {
                             C <- xml_add_child(self$current_lowest_div, "div")
-                            I <- xml_add_child(C, "head")
-                            xml_add_child(I, str_trim(substring(B, 2)))
-                            xml_set_attr(C, .A, self$get_div_level(B))
-                            if (xml_attr(C, .A) > xml_attr(self$current_lowest_div, .A)) {
-                              xml_add_child(self$current_lowest_div, C)
-                            } else if (xml_attr(C, .A) == xml_attr(self$current_lowest_div, .A)) {
-                              xml_add_child(xml_parent(self$current_lowest_div), C)
+                            I <- xml_add_child(C, "head", str_trim(gsub('#', '', B)))
+                            C[a_A] <- self$get_div_level(B)
+                            if (C[a_A] > self$current_lowest_div[a_A]) {
+                              self$current_lowest_div <- append(self$current_lowest_div, C)
+                            } else if (C[a_A] == self$current_lowest_div[a_A]) {
+                              xml_add_child(self$current_lowest_div$parent, C)
                             } else {
-                              xml_add_child(xml_parent(xml_parent(self$current_lowest_div)), C)
+                              xml_add_child(self$current_lowest_div$parent$parent, C)
                             }
                             self$current_lowest_div <- C
                             self$current_lowest_tag <- C
@@ -215,7 +205,8 @@ Parser <- R6::R6Class("Parser",
                         },
                         
                         add_spaces_inline_stages = function(tree_as_string) {
-                          A <- gsub('</stage>([^\\s<>])', '</stage> \\1', tree_as_string)
+                          A <- tree_as_string
+                          A <- gsub('</stage>([^\\s<>])', '</stage> \\1', A)
                           A <- gsub('([^\\s<>])<stage>', '\\1 <stage>', A)
                           return(A)
                         },
@@ -233,27 +224,27 @@ Parser <- R6::R6Class("Parser",
                         },
                         
                         post_process = function() {
-                          D <- set()
+                          D <- character()
                           self$add_cast_items()
-                          xml_remove(xml_find_first(self$tree_root, "//body")[[.A]])
+                          xml_remove(xml_find_first(self$tree_root, "//body")[[a_A]])
                           for (C in xml_find_all(self$tree_root, "//sp")) {
                             self$post_process_sp(C)
-                            if (.J %in% xml_attrs(C)) {
-                              D <- union(D, list(c(xml_attr(C, .J), str_trim(xml_text(xml_find_first(C, "speaker"))))))
+                            if (a_J %in% xml_attrs(C)) {
+                              D <- c(D, list(c(xml_attr(C, a_J), xml_text(xml_find_first(C, "speaker")))))
                             }
                           }
                           for (A in xml_find_all(self$tree_root, "//div")) {
-                            if (xml_attr(A, .A) == 0) {
-                              xml_set_attr(A, .A, NULL)
-                            } else if (xml_attr(A, .A) == 1) {
-                              xml_set_attr(A, .A, NULL)
-                              xml_set_attr(A, .B, 'act')
-                            } else if (xml_attr(A, .A) == 2) {
-                              xml_set_attr(A, .A, NULL)
-                              xml_set_attr(A, .B, 'scene')
-                            } else if (xml_attr(A, .A) == 3) {
-                              xml_set_attr(A, .A, NULL)
-                              xml_set_attr(A, .B, 'subscene')
+                            if (A[a_A] == 0) {
+                              xml_set_attr(A, "attrs", NULL)
+                            } else if (A[a_A] == 1) {
+                              xml_set_attr(A, "attrs", NULL)
+                              xml_set_attr(A, a_B, 'act')
+                            } else if (A[a_A] == 2) {
+                              xml_set_attr(A, "attrs", NULL)
+                              xml_set_attr(A, a_B, 'scene')
+                            } else if (A[a_A] == 3) {
+                              xml_set_attr(A, "attrs", NULL)
+                              xml_set_attr(A, a_B, 'subscene')
                             }
                           }
                           self$add_particdesc_to_header(D)
@@ -261,16 +252,14 @@ Parser <- R6::R6Class("Parser",
                         },
                         
                         add_cast_items = function() {
-                          A <- xml_find_first(self$tree_root, .L)
+                          A <- xml_find_first(self$tree_root, a_L)
                           if (!is.null(A)) {
                             F <- xml_text(A)
-                            B <- strsplit(F, .H)[[1]]
+                            B <- strsplit(F, a_H)[[1]]
                             xml_remove(A)
-                            C <- xml_add_child(A, "head")
-                            xml_add_child(C, B[1])
+                            C <- xml_add_child(A, "head", B[1])
                             for (G in B[-1]) {
-                              D <- xml_add_child(A, "castItem")
-                              xml_add_child(D, G)
+                              D <- xml_add_child(A, "castItem", G)
                             }
                           }
                         },
@@ -283,8 +272,7 @@ Parser <- R6::R6Class("Parser",
             </listChange>
         </revisionDesc>', format(Sys.Date(), "%Y-%m-%d"))
                           C <- read_xml(B)
-                          D <- xml_find_first(C, "//revisionDesc")
-                          xml_add_child(self$tree_root$teiHeader, D)
+                          xml_add_child(self$tree_root$teiHeader, C)
                         },
                         
                         add_particdesc_to_header = function(set_of_char_pairs) {
@@ -293,13 +281,10 @@ Parser <- R6::R6Class("Parser",
                           E <- xml_add_child(D, "listPerson")
                           for (F in set_of_char_pairs) {
                             A <- xml_add_child(E, "person")
-                            xml_set_attr(A, .I, str_trim(substring(F[1], 2)))
-                            xml_set_attr(A, "sex", self$guess_gender_stupid(xml_attr(A, .I)))
-                            G <- xml_add_child(A, "persName")
-                            xml_add_child(G, F[2])
+                            xml_set_attr(A, a_I, str_trim(gsub('#', '', F[1])))
+                            xml_set_attr(A, "sex", self$guess_gender_stupid(xml_attr(A, a_I)))
+                            G <- xml_add_child(A, "persName", F[2])
                           }
-                          H <- self$tree_root$teiHeader
-                          xml_add_child(H, C)
                         },
                         
                         handle_speaker_in_sp = function(sp, first_line) {
@@ -308,9 +293,11 @@ Parser <- R6::R6Class("Parser",
                           B <- str_match(D, '([^()]+)(\\(.+?\\))([.,:!;])?')
                           if (!is.na(B) && self$bracketstages) {
                             xml_add_child(A, str_trim(B[1]))
-                            E <- xml_add_child(sp, "stage")
+                            E <- xml_add_child(sp, a_F)
                             xml_add_child(E, str_trim(B[2]))
-                            xml_add_child(A, B[3])
+                            if (!is.na(B[3])) {
+                              xml_add_child(A, str_trim(B[3]))
+                            }
                           } else {
                             xml_add_child(A, str_trim(D))
                           }
@@ -320,16 +307,16 @@ Parser <- R6::R6Class("Parser",
                         transliterate_speaker_ids = function(sp, speaker) {
                           B <- xml_text(speaker)
                           if (grepl('[йцукенгшщзхъфывапролджэячсмитью]', tolower(B))) {
-                            A <- tolower(CleanAfterTranslit(translit(B, 'uk', reversed = .D)))
+                            A <- tolower(gsub('і', 'i', gsub('ї', 'i', gsub('є', 'e', B))))
                             A <- str_trim(A)
                           } else if (grepl('[אאַאָבבֿגדהוװוּױזחטייִײײַככּךלמםנןסעפּפֿףצץקרששׂתּת]', tolower(B))) {
                             A <- yiddish::transliterate(B)
                             A <- gsub('[\\u0591-\\u05BD\\u05C1\\u05C2\\\\u05C7]', ' ', A)
                           } else {
-                            A <- tolower(str_trim(B))
-                            A <- CleanAfterTranslit(A)
+                            A <- tolower(gsub('і', 'i', gsub('ї', 'i', gsub('є', 'e', B))))
+                            A <- str_trim(A)
                           }
-                          xml_set_attr(sp, .J, paste0("#", A))
+                          sp[a_J] <- paste0("#", A)
                         },
                         
                         fix_starting_w_number = function(clean_who) {
@@ -341,21 +328,9 @@ Parser <- R6::R6Class("Parser",
                           return(B)
                         },
                         
-                        CleanAfterTranslit = function(line) {
+                        clean_after_translit = function(line) {
                           B <- 'i'
-                          A <- line
-                          A <- gsub('і', B, A)
-                          A <- gsub('ї', B, A)
-                          A <- gsub('і', B, A)
-                          A <- gsub('є', 'e', A)
-                          A <- gsub('є', 'e', A)
-                          A <- gsub('ы', 'y', A)
-                          A <- gsub("'", '', A)
-                          A <- gsub('’', '', A)
-                          A <- gsub('«', '', A)
-                          A <- gsub('»', '', A)
-                          A <- gsub('′', '', A)
-                          A <- gsub(' ', '_', A)
+                          A <- gsub('і', B, gsub('ї', B, gsub('є', 'e', gsub('ы', 'y', gsub("'", '', gsub('’', '', gsub('«', '', gsub('»', '', gsub('′', '', gsub(' ', '_', line))))))))))
                           return(A)
                         },
                         
@@ -363,14 +338,14 @@ Parser <- R6::R6Class("Parser",
                           B <- speechtext
                           for (A in check_inline_brackets) {
                             if (nchar(A[1]) > 0) {
-                              B <- c(B, A[1])
+                              B <- append(B, A[1])
                             }
-                            C <- xml_add_child(B, "stage")
-                            xml_set_attr(C, .B, 'inline')
+                            C <- xml_add_child(B, a_F)
+                            xml_set_attr(C, a_B, 'inline')
                             xml_add_child(C, str_trim(A[2]))
-                            B <- c(B, C)
+                            B <- append(B, C)
                             if (nchar(A[3]) > 0) {
-                              B <- c(B, A[3])
+                              B <- append(B, A[3])
                             }
                           }
                         },
@@ -404,11 +379,11 @@ Parser <- R6::R6Class("Parser",
                           B <- self$is_prose
                           for (A in text_split_in_lines[-1]) {
                             if (startsWith(A, '%')) {
-                              D <- xml_add_child(sp, "stage")
-                              xml_add_child(D, str_trim(substring(A, 2)))
+                              D <- xml_add_child(sp, a_F)
+                              xml_add_child(D, str_trim(gsub('%', '', A)))
                             } else if (startsWith(A, '~')) {
                               B <- !B
-                              A <- str_trim(substring(A, 2))
+                              A <- str_trim(gsub('~', '', A))
                               self$add_line_to_speech(A, sp, B)
                             } else {
                               self$add_line_to_speech(A, sp, B)
@@ -419,7 +394,7 @@ Parser <- R6::R6Class("Parser",
                         post_process_sp = function(sp) {
                           C <- xml_text(sp)
                           xml_remove(sp)
-                          B <- strsplit(C, .H)[[1]]
+                          B <- strsplit(C, a_H)[[1]]
                           D <- B[1]
                           self$handle_speaker_in_sp(sp, D)
                           self$handle_speech_in_sp(sp, B)
@@ -433,11 +408,11 @@ Parser <- R6::R6Class("Parser",
                           A <- gsub('(<speaker>)([^<>]+)\\s*\\n\\s*([^<>]+)(</speaker>)', '\\1\\2\\3\\4', A)
                           A <- gsub('([\\n\\s]+)(<stage type="inline">)([^<>]+)(</stage>)([\\n\\s]+)', '<stage>\\3\\4', A)
                           B <- list()
-                          for (E in strsplit(A, .H)[[1]]) {
+                          for (E in strsplit(A, a_H)[[1]]) {
                             F <- gsub('^( +)', '\\1\\1', E)
-                            B <- c(B, F)
+                            B <- append(B, F)
                           }
-                          A <- paste(B, collapse = .H)
+                          A <- paste(B, collapse = a_H)
                           read_xml(A)
                           return(A)
                         },
