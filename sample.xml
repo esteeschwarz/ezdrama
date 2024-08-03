@@ -3,7 +3,6 @@
   <teiHeader>
     <fileDesc>
       <titleStmt>
-        <title type="main">c(NA, NA, NA, NA, NA)</title>
         <title type="sub">c(NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA)</title>
         <author>c(NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA)</author>
       </titleStmt>
@@ -85,8 +84,4 @@
     </body>
   </text>
 </TEI>
-<particDesc>
-  <listPerson/>
-</particDesc>
-<listPerson/>
 

@@ -109,7 +109,7 @@ Parser <- R6::R6Class("Parser",
                         },
                         
                         add_title_to_header = function(header, line) {
-                          header<-xml_find_first(header,"teiHeader/*")
+                          header<-xml_find_first(header,"teiHeader") #14321 /*
                           
                           B <- xml_find_first(header, a_E)
                           A <- xml_add_child(B, "title", line[6:nchar(line)])
@@ -311,10 +311,10 @@ Parser <- R6::R6Class("Parser",
                         
                         add_particdesc_to_header = function(set_of_char_pairs) {
                           C <- xml_add_child(xml_find_all(self$tree_root,"teiHeader"), "profileDesc")
-                          D <- xml_add_child(C, "particDesc")
-                          E <- xml_add_child(D, "listPerson")
+                          D <- xml_add_child(xml_find_all(self$tree_root,"//profileDesc"), "particDesc")
+                          E <- xml_add_child(xml_find_all(self$tree_root,"//particDesc"), "listPerson")
                           for (F_m in set_of_char_pairs) {
-                            A <- xml_add_child(E, "person")
+                            A <- xml_add_child(xml_find_all(self$tree_root,"//listPerson"), "person")
                             xml_set_attr(A, a_I, str_trim(gsub('#', '', F_m[1])))
                             xml_set_attr(A, "sex", self$guess_gender_stupid(xml_attr(A, a_I)))
                             G <- xml_add_child(A, "persName", F_m[2])
