@@ -24,6 +24,9 @@ Parser <- R6::R6Class("Parser",
                         lasting_comment = NULL,
                         special_symb_list = NULL,
                         bracketstages = NULL,
+                        tree_to_write = NULL,
+                        outputname = NULL,
+                        
                         
                         initialize = function(bracketstages = a_D, is_prose = a_D, dracor_id = 'insert_id', dracor_lang = 'insert_lang') {
                           self$tree_root <- xml_new_root("TEI", ns = "http://www.tei-c.org/ns/1.0")
@@ -162,7 +165,9 @@ Parser <- R6::R6Class("Parser",
                         parse_lines_to_xml = function(ezdramalines) {
                           self$parse_lines(ezdramalines)
                           self$post_process()
-                          B <- self$indent_dracor_style()
+                          #B <- self$indent_dracor_style()
+                          B <- self$tree_root
+                          
                           self$tree_to_write <- self$add_spaces_inline_stages(B)
                         },
                         
@@ -217,9 +222,11 @@ Parser <- R6::R6Class("Parser",
                               self$current_lowest_div <- append(self$current_lowest_div, C)
                             } else if (as.double(C[a_A]) == as.double(self$current_lowest_div[a_A])) {
                                 {print(self$current_lowest_div)
-                                xml_add_child(self$current_lowest_div$parent, C)}
+                                  xml_add_child(self$current_lowest_div, C)}
+                              
+                            #    xml_add_child(self$current_lowest_div$parent, C)}
                             } else {
-                              xml_add_child(self$current_lowest_div$parent$parent, C)
+                                xml_add_child(self$current_lowest_div$parent$parent, C)
                             }
                             self$current_lowest_div <- C
                             self$current_lowest_tag <- C
@@ -248,7 +255,11 @@ Parser <- R6::R6Class("Parser",
                         post_process = function() {
                           D <- character()
                           self$add_cast_items()
-                          xml_remove(xml_find_first(self$tree_root, "//body")[[a_A]])
+                          cat("253\n")
+                          m<-print(xml_find_first(self$tree_root, "//body")[[a_A]])
+                          print(length(m))
+                          if(length(m)>0)
+                             xml_remove(xml_find_first(self$tree_root, "//body")[[a_A]])
                           for (C in xml_find_all(self$tree_root, "//sp")) {
                             self$post_process_sp(C)
                             if (a_J %in% xml_attrs(C)) {
@@ -256,15 +267,16 @@ Parser <- R6::R6Class("Parser",
                             }
                           }
                           for (A in xml_find_all(self$tree_root, "//div")) {
-                            if (A[a_A] == 0) {
+                            print(A)
+                            if (length(A[a_A]) == 0) {
                               xml_set_attr(A, "attrs", NULL)
-                            } else if (A[a_A] == 1) {
+                            } else if (length(A[a_A]) == 1) {
                               xml_set_attr(A, "attrs", NULL)
                               xml_set_attr(A, a_B, 'act')
-                            } else if (A[a_A] == 2) {
+                            } else if (length(A[a_A]) == 2) {
                               xml_set_attr(A, "attrs", NULL)
                               xml_set_attr(A, a_B, 'scene')
-                            } else if (A[a_A] == 3) {
+                            } else if (length(A[a_A]) == 3) {
                               xml_set_attr(A, "attrs", NULL)
                               xml_set_attr(A, a_B, 'subscene')
                             }
@@ -294,11 +306,11 @@ Parser <- R6::R6Class("Parser",
             </listChange>
         </revisionDesc>', format(Sys.Date(), "%Y-%m-%d"))
                           C <- read_xml(B)
-                          xml_add_child(self$tree_root$teiHeader, C)
+                          xml_add_child(xml_find_all(self$tree_root,"teiHeader"), C)
                         },
                         
                         add_particdesc_to_header = function(set_of_char_pairs) {
-                          C <- xml_add_child(self$tree_root$teiHeader, "profileDesc")
+                          C <- xml_add_child(xml_find_all(self$tree_root,"teiHeader"), "profileDesc")
                           D <- xml_add_child(C, "particDesc")
                           E <- xml_add_child(D, "listPerson")
                           for (F_m in set_of_char_pairs) {
@@ -424,7 +436,9 @@ Parser <- R6::R6Class("Parser",
                         
                         indent_dracor_style = function() {
                           C <- '\\1\\2'
-                          A <- xml_pretty(self$tree_root)
+                          #A <- xml_pretty(self$tree_root)
+                          A <- self$tree_root
+                          
                           A <- gsub('(<[^/]+?>)\\n\\s+([^<>\\s])', C, A)
                           A <- gsub('([^<>\\s])\\n\\s+(</.+?>)', C, A)
                           A <- gsub('(<speaker>)([^<>]+)\\s*\\n\\s*([^<>]+)(</speaker>)', '\\1\\2\\3\\4', A)
@@ -435,8 +449,8 @@ Parser <- R6::R6Class("Parser",
                             B <- append(B, F_m)
                           }
                           A <- paste(B, collapse = a_H)
-                          read_xml(A)
-                          return(A)
+                          AAA<-read_xml(A) # ohne
+                          return(AAA) # A
                         },
                         
                         output_to_file = function(newfilepath) {
@@ -449,5 +463,6 @@ Parser <- R6::R6Class("Parser",
 
 parser <- Parser$new()
 parser$process_file('sample.txt')
+#parser$output_to_file("sampleR.xml")
 
-
+#writeLines(parser$tree_to_write,"sampleR.xml")
