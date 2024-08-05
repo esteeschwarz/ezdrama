@@ -2,6 +2,7 @@
 # 20240802
 ##########
 # Q: <https://github.com/dracor-org/ezdrama/blob/main/parser.py>
+# python file compression to char < 20.000: <https://freecodingtools.org/online-minifier/python>
 # base translation: <https://www.codeconvert.ai/app>
 
 library(xml2)
