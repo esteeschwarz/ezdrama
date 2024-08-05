@@ -1,3 +1,9 @@
+# 14317.ezdrama-parser.R-translation.essai
+# 20240802
+##########
+# Q: <https://github.com/dracor-org/ezdrama/blob/main/parser.py>
+# base translation: <https://www.codeconvert.ai/app>
+
 library(xml2)
 library(stringr)
 library(rvest)
