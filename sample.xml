@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<TEI ns="http://www.tei-c.org/ns/1.0" xml:id="insert_id" xml:lang="insert_lang">
+<TEI xml:id="insert_id" xml:lang="insert_lang" xmlns="http://www.tei-c.org/ns/1.0">
   <teiHeader>
     <fileDesc>
       <titleStmt>
-        <title type="sub">c(NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA)</title>
-        <author>c(NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA)</author>
+        <title type="main">Ham</title>
+        <title type="sub">A tragedy</title>
+        <author>William S</author>
       </titleStmt>
       <publicationStmt>
         <publisher xml:id="dracor">DraCor</publisher>
@@ -12,7 +12,8 @@
         <availability>
           <licence>
             <ab>CC0 1.0</ab>
-            <ref target="https://creativecommons.org/publicdomain/zero/1.0/">Licence</ref>
+            <ref target="https://creativecommons.org/publicdomain/zero/1.0/">
+              Licence</ref>
           </licence>
         </availability>
       </publicationStmt>
@@ -28,12 +29,22 @@
     </fileDesc>
     <profileDesc>
       <particDesc>
-        <listPerson/>
+        <listPerson>
+          <person sex="MALE" xml:id="ham">
+            <persName>Ham</persName>
+          </person>
+          <person sex="MALE" xml:id="egg">
+            <persName>Egg</persName>
+          </person>
+          <person sex="MALE" xml:id="vikings">
+            <persName>Vikings</persName>
+          </person>
+        </listPerson>
       </particDesc>
     </profileDesc>
     <revisionDesc>
       <listChange>
-        <change when="2024-08-03">DESCRIBE CHANGE</change>
+        <change when="2024-08-09">DESCRIBE CHANGE</change>
       </listChange>
     </revisionDesc>
   </teiHeader>
@@ -50,38 +61,53 @@
       </event>
     </listEvent>
     <listRelation>
-      <relation name="wikidata" active="INSERT" passive="INSERT"/>
+      <relation active="INSERT" name="wikidata" passive="INSERT"/>
     </listRelation>
   </standOff>
   <text>
     <front>
       <castList>
-        <Dramatis Personae/>
-        <Ham/>
-        <Egg/>
-        <Vikings/>
+        <head>Dramatis Personae</head>
+        <castItem>Ham</castItem>
+        <castItem>Egg</castItem>
+        <castItem>Vikings</castItem>
+        <castItem>
+        </castItem>
       </castList>
     </front>
     <body>
       <div type="act">
         <head>Act 1</head>
-        <div type="act">
+        <div type="scene">
           <head>Scene 1</head>
-          <div type="act">
-            <head>Scene 2</head>
-             <stage>
-              <Enter Vikings/>
-            </stage> 
-             <stage>
-              <The end/>
-            </stage> 
-          </div>
-          <div type="act">
-            <head>Scene 2</head>
-          </div>
+          <sp who="#ham">
+            <speaker>Ham:</speaker>
+            <p>Lovely Spam!</p>
+          </sp>
+          <sp who="#egg">
+            <speaker>Egg:</speaker>
+            <p>Wonderful Spam!</p>
+          </sp>
+        </div>
+        <div type="scene">
+          <head>Scene 2</head>
+          <stage>Enter Vikings</stage>
+          <sp who="#ham">
+            <speaker>Ham:</speaker>
+            <p>Egg, Spam!</p>
+            <p>Sausage, and Bacon!</p>
+          </sp>
+          <sp who="#vikings">
+            <speaker>Vikings:</speaker>
+            <stage>(singing)</stage>
+            <l>Spam, Spam, <stage>(o!)</stage></l>
+            <l>Spam, Spam, <stage>(loud)</stage></l>
+            <l>Spam, Spam, <stage>(quiet)</stage></l>
+            <l>Spam, and Spam</l>
+          </sp>
+          <stage>The end</stage>
         </div>
       </div>
     </body>
   </text>
 </TEI>
-
