@@ -522,4 +522,5 @@ class Parser():
 
 if __name__ == "__main__":
     parser = Parser()
-    parser.process_file('sample.txt')
+#    parser.process_file('sample.txt')
+    parser.process_file(temptext)
