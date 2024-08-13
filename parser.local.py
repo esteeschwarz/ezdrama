@@ -14,10 +14,17 @@ https://github.com/dracor-org/ezdrama/blob/main/ezdramaparser.ipynb
 
 import re
 from datetime import datetime
+import transliterate
 from transliterate import translit
 import yiddish
+#import html5lib
 from bs4 import BeautifulSoup, Tag
-import tempfile
+
+import sys
+#print(sys.argv[0])  # Prints 'my_script.py'
+#print(sys.argv[1])  # Prints 'arg1'
+#print(sys.argv[2])  # Prints 'arg2'
+
 
 # =================================
 # Parser engine
@@ -35,8 +42,8 @@ class Parser():
     def __init__(self,
                  bracketstages = True,
                  is_prose = True,
-                 dracor_id = 'insert_id',
-                 dracor_lang = 'insert_lang'):
+                 dracor_id = 'insertID',
+                 dracor_lang = 'ger'):
         ## initializing a new TEI/XML bs-tree that will be populated from ezdrama text:
         self.tree_root = Tag(name='TEI')
         self.tree_root['xmlns'] = "http://www.tei-c.org/ns/1.0"
@@ -181,26 +188,13 @@ class Parser():
                         self.lasting_comment = False
                     else:
                         self.current_lowest_tag.append(line)
-    
-    def write_csv(csvfile):
-    #writer = csv.DictWriter(csvfile, fieldnames=['foo', 'bar'])
-    #writer.writeheader()
-    #writer.writerow({'foo': 1, 'bar': 2})
-        self.output_to_file(csvfile)
         
-    def test_write_temp():
-        with tempfile.NamedTemporaryFile(mode='w', delete=True) as tempfile_py:
-             # self.output_to_file(tempfile_py)
-             write_csv(tempfile_py)
-    
+        
     def process_file(self, path_to_file):
         with open(path_to_file) as openfile:
             file_lines = openfile.readlines()
-        #self.parse_lines_to_xml(file_lines)
-       # self.test_write_temp()
-        #temptext_py = 
-        #self.output_to_file(path_to_file.replace('.txt', '.xml'))
-        text_processed_py = self.parse_lines_to_xml(file_lines)
+        self.parse_lines_to_xml(file_lines)
+        self.output_to_file(path_to_file.replace('.txt', '.xml'))
 
 
     def parse_lines_to_xml(self, ezdramalines):
@@ -401,7 +395,9 @@ class Parser():
         ## yiddish ids transliterated
         elif re.search('[אאַאָבבֿגדהוװוּױזחטייִײײַככּךלמםנןסעפּפֿףצץקרששׂתּת]', speaker.text.lower()):
             clean_who = yiddish.transliterate(speaker.text.strip('.,:!; '))
-            clean_who = re.sub(r'[\u0591-\u05BD\u05C1\u05C2\\u05C7]', ' ', clean_who)
+          #  clean_who = re.sub(r'[\u0591-\u05BD\u05C1\u05C2\\u05C7]', ' ', clean_who)
+          # inserts whitespace into id's, remove this
+            clean_who = re.sub(r'[\u0591-\u05BD\u05C1\u05C2\\u05C7]', '', clean_who)
         else:
             clean_who = speaker.text.strip('.,:!; ').lower()
             clean_who = self.__clean_after_translit(clean_who)
@@ -536,5 +532,4 @@ class Parser():
 
 if __name__ == "__main__":
     parser = Parser()
-   # parser.process_file('yudale003.txt')
-    parser.process_file(r.qfile)
+    parser.process_file(sys.argv[1])
