@@ -1,4 +1,4 @@
-@title Ham 
+@title Hamlet 
 @subtitle A tragedy
 @author William S
 ^Dramatis Personae
