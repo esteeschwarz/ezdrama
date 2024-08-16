@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TEI ns="http://www.tei-c.org/ns/1.0" xml:id="insert_id" xml:lang="insert_lang">
     <teiHeader> <fileDesc> <titleStmt> <title type="main">Hamlet</title>
-                <title type="main">Hamlet</title>
                 <title type="sub">A tragedy</title>
-                <title type="sub">A tragedy</title>
-                <author>William S</author>
                 <author>William S</author>
             </titleStmt>
             <publicationStmt> <publisher xml:id="dracor">DraCor</publisher>
@@ -21,61 +18,12 @@
                 </bibl>
             </sourceDesc>
         </fileDesc>
-        <fileDesc> <titleStmt/>
-            <publicationStmt> <publisher xml:id="dracor">DraCor</publisher>
-                <idno type="URL">https://dracor.org</idno>
-                <availability> <licence> <ab>CC0 1.0</ab>
-                        <ref target="https://creativecommons.org/publicdomain/zero/1.0/">Licence</ref>
-                    </licence>
-                </availability>
-            </publicationStmt>
-            <sourceDesc> <bibl type="digitalSource"> <name>ENTER SOURCE NAME HERE</name>
-                    <idno type="URL">ENTER SOURCE URL HERE</idno>
-                    <availability status="free"> <p>In the public domain.</p>
-                    </availability>
-                </bibl>
-            </sourceDesc>
-        </fileDesc>
         <profileDesc> <particDesc> <listPerson/>
             </particDesc>
         </profileDesc>
-        <profileDesc> <particDesc> <listPerson/>
-            </particDesc>
-        </profileDesc>
-        <revisionDesc> <listChange> <change when="2024-08-15">DESCRIBE CHANGE</change>
+        <revisionDesc> <listChange> <change when="2024-08-16">DESCRIBE CHANGE</change>
             </listChange>
         </revisionDesc>
-    </teiHeader>
-    <teiHeader> <fileDesc> <titleStmt/>
-            <publicationStmt> <publisher xml:id="dracor">DraCor</publisher>
-                <idno type="URL">https://dracor.org</idno>
-                <availability> <licence> <ab>CC0 1.0</ab>
-                        <ref target="https://creativecommons.org/publicdomain/zero/1.0/">Licence</ref>
-                    </licence>
-                </availability>
-            </publicationStmt>
-            <sourceDesc> <bibl type="digitalSource"> <name>ENTER SOURCE NAME HERE</name>
-                    <idno type="URL">ENTER SOURCE URL HERE</idno>
-                    <availability status="free"> <p>In the public domain.</p>
-                    </availability>
-                </bibl>
-            </sourceDesc>
-        </fileDesc>
-        <fileDesc> <titleStmt/>
-            <publicationStmt> <publisher xml:id="dracor">DraCor</publisher>
-                <idno type="URL">https://dracor.org</idno>
-                <availability> <licence> <ab>CC0 1.0</ab>
-                        <ref target="https://creativecommons.org/publicdomain/zero/1.0/">Licence</ref>
-                    </licence>
-                </availability>
-            </publicationStmt>
-            <sourceDesc> <bibl type="digitalSource"> <name>ENTER SOURCE NAME HERE</name>
-                    <idno type="URL">ENTER SOURCE URL HERE</idno>
-                    <availability status="free"> <p>In the public domain.</p>
-                    </availability>
-                </bibl>
-            </sourceDesc>
-        </fileDesc>
     </teiHeader>
     <standOff> <listEvent> <event type="print" when="2024"> <desc/>
             </event>
@@ -97,12 +45,26 @@
                 </head>
                 <div type="scene"> <head> <Scene 1/>
                     </head>
+                    <sp who="#"> <Lovely Spam! />
+                        <speaker/>
+                    </sp>
+                    <sp who="#"> <Wonderful Spam!/>
+                        <speaker/>
+                    </sp>
                     <div type="scene"> <head> <Scene 2/>
                         </head>
-                         <stage> <Enter Vikings/>
-                        </stage> 
-                         <stage> <The end/>
-                        </stage> 
+                         <stage>Enter Vikings</stage> 
+                        <sp who="#"> <Egg, Spam! />
+                            <Sausage, and Bacon! />
+                            <speaker/>
+                        </sp>
+                        <sp who="#"> <~Spam, Spam,(o!) />
+                            <Spam, Spam, (loud) />
+                            <Spam, Spam, (quiet) />
+                            <Spam, and Spam/>
+                            <speaker/>
+                        </sp>
+                         <stage>The end</stage> 
                     </div>
                 </div>
                 <div type="scene"> <head> <Scene 1/>
