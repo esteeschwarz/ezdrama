@@ -217,7 +217,8 @@ Parser <- R6::R6Class("Parser",
                           } else if (D == '#') {
                             C <- xml_add_child(self$current_lowest_div, "div")
                             I <- xml_add_child(C, "head")
-                            xml_add_child(I, str_trim(substring(B, 2)))
+                            # xml_add_child(I, str_trim(substring(B, 2)))
+                            xml_set_text(I, str_trim(substring(B, 2)))
                             xml_set_attr(C, a_A, self$get_div_level(B))
                             if (xml_attr(C, a_A) > xml_attr(self$current_lowest_div, a_A)) {
                               xml_add_child(self$current_lowest_div, C)
@@ -251,15 +252,29 @@ Parser <- R6::R6Class("Parser",
                         
                         post_process = function() {
                           #D <- set()
-                          D <- data.frame()
+                         # D <- data.frame()
                           self$add_cast_items()
                          # xml_remove(xml_find_first(self$tree_root, "//body")[[a_A]])
-                          for (C in xml_find_all(self$tree_root, "//sp")) {
-                            self$post_process_sp(C)
-                            if (a_J %in% xml_attrs(C)) {
-                              D <- union(D, list(c(xml_attr(C, a_J), str_trim(xml_text(xml_find_first(C, "speaker"))))))
-                            }
+                           for (C in xml_find_all(self$tree_root, "//sp")) {
+                             self$post_process_sp(C)
+                          #   if (a_J %in% xml_attrs(C)) {
+                          #    # D <- union(D, list(c(xml_attr(C, a_J), str_trim(xml_text(xml_find_first(C, "speaker"))))))
+                          #     D <- data.frame(att=xml_attr(C, a_J), 
+                          #                     spk=str_trim(xml_text(xml_find_all(C, "speaker"))))
+                          #     cat("D\n")
+                          #     print(D)
+                          #   }
+                          # }
+                          #C <- xml_find_all(parser$tree_root, "//sp")
+                          #parser$post_process_sp(C)
+                         # if (a_J %in% xml_attrs(C)) {
+                            # D <- union(D, list(c(xml_attr(C, a_J), str_trim(xml_text(xml_find_first(C, "speaker"))))))
+                            D <- cbind(xml_attr(C, a_J), 
+                                       str_trim(xml_text(xml_find_all(C, "speaker"))))
+                            cat("D\n")
+                            print(D)
                           }
+                          
                           for (A in xml_find_all(self$tree_root, "//div")) {
                             if (xml_attr(A, a_A) == 0) {
                               xml_set_attr(A, a_A, NULL)
@@ -274,7 +289,7 @@ Parser <- R6::R6Class("Parser",
                               xml_set_attr(A, a_B, 'subscene')
                             }
                           }
-                          print(D)
+                         # print(D)
                           self$add_particdesc_to_header(D)
                           self$add_rev_desc()
                         },
@@ -311,12 +326,14 @@ Parser <- R6::R6Class("Parser",
                           C <- xml_add_child(A0, "profileDesc")
                           D <- xml_add_child(C, "particDesc")
                           E <- xml_add_child(D, "listPerson")
-                          for (F_F in set_of_char_pairs) {
+                          for (k in 1:length(set_of_char_pairs[,1])) {
+                            F_F<-set_of_char_pairs[k,1]
+                            F_2<-set_of_char_pairs[k,2]
                             A <- xml_add_child(E, "person")
-                            xml_set_attr(A, a_I, str_trim(substring(F_F[1], 2)))
-                            xml_set_attr(A, "sex", self$guess_gender_stupid(xml_attr(A, a_I)))
+                            xml_set_attr(A, a_I, str_trim(substring(F_F, 2)))
+                           # xml_set_attr(A, "sex", self$guess_gender_stupid(xml_attr(A, a_I)))
                             G <- xml_add_child(A, "persName")
-                            xml_add_child(G, F_F[2])
+                            xml_set_text(G, F_2)
                           }
                           H <- xml_find_first(self$tree_root,"//teiHeader")
                          # xml_add_child(H, C)
@@ -326,6 +343,14 @@ Parser <- R6::R6Class("Parser",
                           D <- first_line
                           A <- xml_add_child(sp, "speaker")
                           B <- str_match(D, '([^()]+)(\\(.+?\\))([.,:!;])?')
+                          #C <- strsplit(D, a_H)[[1]] # \n all lines
+                          E <- D[1]
+                          E
+                          speaker<-substr(str_match(E, '([^()]+)(\\(.+?\\))([.,:!;])?')[[2]],2,nchar(E))
+                          #substr(str_match(D, '([^()]+)(\\(.+?\\))([.,:!;])?')[[2]],2,nchar(D))
+                          
+                          #speaker<-substr(str_match(D, '([^()]+)(\\(.+?\\))([.,:!;])?')[[2]],2,nchar(B))
+
                           if (!is.na(B) && self$bracketstages) {
                             # xml_add_child(A, str_trim(B[1])) #or
                            # xml_set_text(A, str_trim(B[1]))
@@ -338,19 +363,22 @@ Parser <- R6::R6Class("Parser",
                             #xml_add_child(A, B[3])
                           } else {
                             # AA<-xml_add_child(A, str_trim(D))
-                           print("else")
-                            # xml_set_text(AA, str_trim(D))
+                           print(speaker)
+                             xml_set_text(A,speaker)
                             
                           }
-                          self$transliterate_speaker_ids(sp, A)
+                          print(speaker)
+                          self$transliterate_speaker_ids(sp, speaker)
                         },
                         
                         transliterate_speaker_ids = function(sp, speaker) {
-                          B <- xml_text(speaker)
+                          #B <- xml_text(speaker)
+                          B<-speaker
                           if (grepl('[йцукенгшщзхъфывапролджэячсмитью]', tolower(B))) {
 #                            A <- tolower(CleanAfterTranslit(translit(B, 'uk', reversed = a_D)))
                             A <- tolower(B)
                             A <- str_trim(A)
+                            print(A)
                           } else if (grepl('[אאַאָבבֿגדהוװוּױזחטייִײײַככּךלמםנןסעפּפֿףצץקרששׂתּת]', tolower(B))) {
                           #  A <- yiddish::transliterate(B)
                             A <- gsub('[\\u0591-\\u05BD\\u05C1\\u05C2\\\\u05C7]', ' ', B)

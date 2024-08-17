@@ -18,10 +18,12 @@
                 </bibl>
             </sourceDesc>
         </fileDesc>
-        <profileDesc> <particDesc> <listPerson/>
+        <profileDesc> <particDesc> <listPerson> <person xml:id="NA"> <persName>NA</persName>
+                    </person>
+                </listPerson>
             </particDesc>
         </profileDesc>
-        <revisionDesc> <listChange> <change when="2024-08-16">DESCRIBE CHANGE</change>
+        <revisionDesc> <listChange> <change when="2024-08-17">DESCRIBE CHANGE</change>
             </listChange>
         </revisionDesc>
     </teiHeader>
@@ -41,41 +43,35 @@
                 <Vikings/>
             </castList>
         </front>
-        <body level="0"> <div type="act"> <head> <ct 1/>
-                </head>
-                <div type="scene"> <head> <Scene 1/>
-                    </head>
-                    <sp who="#"> <Lovely Spam! />
-                        <speaker/>
+        <body level="0"> <div type="act"> <head>ct 1</head>
+                <div type="scene"> <head>Scene 1</head>
+                    <sp who="#NA"> <Lovely Spam! />
+                        <speaker>NA</speaker>
                     </sp>
-                    <sp who="#"> <Wonderful Spam!/>
-                        <speaker/>
+                    <sp who="#NA"> <Wonderful Spam!/>
+                        <speaker>NA</speaker>
                     </sp>
-                    <div type="scene"> <head> <Scene 2/>
-                        </head>
+                    <div type="scene"> <head>Scene 2</head>
                          <stage>Enter Vikings</stage> 
-                        <sp who="#"> <Egg, Spam! />
+                        <sp who="#NA"> <Egg, Spam! />
                             <Sausage, and Bacon! />
-                            <speaker/>
+                            <speaker>NA</speaker>
                         </sp>
-                        <sp who="#"> <~Spam, Spam,(o!) />
+                        <sp who="#NA"> <~Spam, Spam,(o!) />
                             <Spam, Spam, (loud) />
                             <Spam, Spam, (quiet) />
                             <Spam, and Spam/>
-                            <speaker/>
+                            <speaker>NA</speaker>
                         </sp>
                          <stage>The end</stage> 
                     </div>
                 </div>
-                <div type="scene"> <head> <Scene 1/>
-                    </head>
+                <div type="scene"> <head>Scene 1</head>
                 </div>
-                <div type="scene"> <head> <Scene 2/>
-                    </head>
+                <div type="scene"> <head>Scene 2</head>
                 </div>
             </div>
-            <div type="act"> <head> <ct 1/>
-                </head>
+            <div type="act"> <head>ct 1</head>
             </div>
         </body>
         <front/>

@@ -27,12 +27,35 @@ C %in% strsplit(parser$special_symb_list, "")[[1]]
 
 E <- substr(line, 2, nchar(B))
 
-C<-"@ham (laut) !
-sausage and
+first_line<-"@Ham: (stage)
+"
+"sausage and
 ham"
+C<-first_line
 B <- strsplit(C, a_H)[[1]] # \n
 D <- B[1]
-
-D
-B <- str_match(D, '([^()]+)(\\(.+?\\))([.,:!;])?')
 B
+D
+D<-first_line
+B <- str_match(D, '([^()]+)(\\(.+?\\))([.,:!;]).+?')
+E
+B
+B <- strsplit(C, a_H)[[1]] # \n all lines
+D <- B[1]
+B
+speaker<-substr(str_match(B, '([^()]+)(\\(.+?\\))([.,:!;])?')[[2]],2,nchar(B))
+substr(str_match(D, '([^()]+)(\\(.+?\\))([.,:!;])?')[[2]],2,nchar(D))
+spe
+
+C <- xml_find_all(parser$tree_root, "//sp")
+  parser$post_process_sp(C)
+  #if (a_J %in% xml_attrs(C)) {
+    # D <- union(D, list(c(xml_attr(C, a_J), str_trim(xml_text(xml_find_first(C, "speaker"))))))
+    D <- cbind(xml_attr(C, a_J), 
+                    str_trim(xml_text(xml_find_all(C, "speaker"))))
+    cat("D\n")
+    print(D)
+  #}
+length(D[,1])
+#rm(D)
+
