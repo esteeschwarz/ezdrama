@@ -58,4 +58,6 @@ C <- xml_find_all(parser$tree_root, "//sp")
   #}
 length(D[,1])
 #rm(D)
-
+ezdramalines<-readLines("sample.txt")
+self<-parser
+x1<-self$parse_lines(ezdramalines)
