@@ -218,8 +218,8 @@ Parser <- R6::R6Class("Parser",
                           } else if (D == '#') {
                             C <- xml_add_child(self$current_lowest_div, "div")
                             I <- xml_add_child(C, "head")
-                            # xml_add_child(I, str_trim(substring(B, 2)))
-                            xml_set_text(I, str_trim(substring(B, 2)))
+                             # xml_add_child(I, str_trim(substring(B, 2)))
+                            xml_set_text(I, str_trim(B))
                             xml_set_attr(C, g_level, self$get_div_level(B))
                             if (xml_attr(C, g_level) > xml_attr(self$current_lowest_div, g_level)) {
                               xml_add_child(self$current_lowest_div, C)
@@ -240,7 +240,7 @@ Parser <- R6::R6Class("Parser",
                         },
                         
                         get_div_level = function(line) {
-                          A <- 1
+                          A <- 0 # or: 1
                           for (B in strsplit(line, "")[[1]]) {
                             if (B == '#') {
                               A <- A + 1
@@ -457,7 +457,7 @@ Parser <- R6::R6Class("Parser",
                               
                             }
                             # xml_add_child(sp, A)
-                            xml_set_text(sp, str_trim(B))
+                            xml_set_text(A, str_trim(B))
                             
                           }
                         },

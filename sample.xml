@@ -43,15 +43,15 @@
                 <Vikings/>
             </castList>
         </front>
-        <body level="0"> <div type="act"> <head>ct 1</head>
-                <div type="scene"> <head>Scene 1</head>
+        <body level="0"> <div> <head>Act 1</head>
+                <div type="act"> <head>#Scene 1</head>
                     <sp who="#NA"> <Lovely Spam! />
                         <speaker>NA</speaker>
                     </sp>
                     <sp who="#NA"> <Wonderful Spam!/>
                         <speaker>NA</speaker>
                     </sp>
-                    <div type="scene"> <head>Scene 2</head>
+                    <div type="act"> <head>#Scene 2</head>
                          <stage>Enter Vikings</stage> 
                         <sp who="#NA"> <Egg, Spam! />
                             <Sausage, and Bacon! />
@@ -63,18 +63,31 @@
                             <Spam, and Spam/>
                             <speaker>NA</speaker>
                         </sp>
-                         <stage>The end</stage> 
+                        <div> <head>Act 2</head>
+                            <div type="act"> <head>#scene 1</head>
+                                 <stage>Enter Vikinger</stage> 
+                                <sp who="#NA"> <Egg, Spam! />
+                                    <Sausage, and Bacon! />
+                                    <speaker>NA</speaker>
+                                </sp>
+                                 <stage>The end</stage> 
+                            </div>
+                            <div type="act"> <head>#scene 1</head>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div type="scene"> <head>Scene 1</head>
+                <div type="act"> <head>#Scene 1</head>
                 </div>
-                <div type="scene"> <head>Scene 2</head>
+                <div type="act"> <head>#Scene 2</head>
                 </div>
-            </div>
-            <div type="act"> <head>ct 1</head>
+                <div> <head>Act 2</head>
+                </div>
             </div>
         </body>
         <front/>
         <body/>
+        <div> <head>Act 1</head>
+        </div>
     </text>
 </TEI>

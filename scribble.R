@@ -61,3 +61,6 @@ length(D[,1])
 ezdramalines<-readLines("sample.txt")
 self<-parser
 x1<-self$parse_lines(ezdramalines)
+
+leveline<-"#act 1"
+parser$get_div_level(leveline)

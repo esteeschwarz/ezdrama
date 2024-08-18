@@ -21,4 +21,10 @@ Sausage, and Bacon!
 Spam, Spam, (loud) 
 Spam, Spam, (quiet) 
 Spam, and Spam
+#Act 2
+##scene 1
+$Enter Vikinger
+@Ham: 
+Egg, Spam! 
+Sausage, and Bacon! 
 $The end
